@@ -1,0 +1,2 @@
+webpackJsonp([36],{bkki:function(t,e,n){t.exports={code:"import { Popover, Button } from 'dashkit-ui';\n\nReactDOM.render(\n  <Popover content=\"prompt text\">\n    <Button>click me</Button>\n  </Popover>,\n  mountNode\n);\n",meta:{order:0,title:{"zh-CN":"基本","en-US":"Basic"},subtitle:{"zh-CN":"<p>基本的使用。</p>\n","en-US":"<p>The most basic usage.</p>\n"},__content:""},preview:function(){var t=n("GiK3"),e=(n("O27J"),n("qMEF"));return t.createElement(e.Popover,{content:"prompt text"},t.createElement(e.Button,null,"click me"))}}}});
+//# sourceMappingURL=36.70bcff5.js.map
