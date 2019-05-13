@@ -23,6 +23,7 @@ let hue = 120;
 let mx;
 let my;
 let isDown = false;
+
 const isTouch = 'ontouchstart' in window;
 const startEventName = isTouch ? 'touchstart' : 'mousedown';
 const moveEventName = isTouch ? 'touchmove' : 'mousemove';
