@@ -32,31 +32,24 @@ function random(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-// calculate the distance between two points
 function calculateDistance(p1x, p1y, p2x, p2y) {
   var xDistance = p1x - p2x,
     yDistance = p1y - p2y;
   return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
 }
 
-// create firework
 function Firework(sx, sy, tx, ty) {
-  // actual coordinates
   this.x = sx;
   this.y = sy;
-  // starting coordinates
   this.sx = sx;
   this.sy = sy;
-  // target coordinates
   this.tx = tx;
   this.ty = ty;
-  // distance from starting point to target
   this.distanceToTarget = calculateDistance(sx, sy, tx, ty);
   this.distanceTraveled = 0;
-  // track the past coordinates of each firework to create a trail effect, increase the coordinate count to create more prominent trails
   this.coordinates = [];
   this.coordinateCount = 3;
-  // populate initial coordinate collection with the current coordinates
+
   while (this.coordinateCount--) {
     this.coordinates.push([this.x, this.y]);
   }
@@ -64,7 +57,6 @@ function Firework(sx, sy, tx, ty) {
   this.speed = 2;
   this.acceleration = 1.05;
   this.brightness = random(50, 70);
-  // circle target indicator radius
   this.targetRadius = 1;
 }
 

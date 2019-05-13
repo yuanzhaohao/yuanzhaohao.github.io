@@ -16,7 +16,7 @@
     "node": ">= 0.10.0"
   },
   "scripts": {
-    "format:js": "prettier --parser './firwork/**/*.js' --write"
+    "format:js": "prettier './firwork/**/*.js' --write"
   },
   "lint-staged": {
     "*.{js,json,md}": [
