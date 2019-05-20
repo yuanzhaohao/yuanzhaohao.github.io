@@ -177,7 +177,7 @@ function loop() {
   ctx.globalCompositeOperation = 'lighter';
 
   ctx.fillStyle = 'pink';
-  ctx.font = 'bold 24px arial';
+  ctx.font = `bold ${12 * ratio}px arial`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText('520 ❤ 1314', cw / 2, ch / 2 - 50);
