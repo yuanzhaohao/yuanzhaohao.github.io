@@ -170,14 +170,16 @@
       var clickToggle = false;
       var boxList = [];
       var box = null;
+      var fontSize = parseInt(37 / 320 * window.innerWidth, 10);
 
       txtCanvas.width = WIDTH;
       txtCanvas.height = HEIGHT;
 
-      txtCtx.font = `bold ${parseInt(37 / 320 * window.innerWidth, 10)}px Sans-serif`;
+
+      txtCtx.font = `bold ${fontSize}px Sans-serif`;
       txtCtx.textAlign = 'center';
       txtCtx.baseline = 'middle';
-      txtCtx.fillText('M I S S   YI', WIDTH / 2, HEIGHT / 2 - 50);
+      txtCtx.fillText('M I S S   YI', WIDTH / 2, HEIGHT / 2 - fontSize - 12);
       txtCtx.fillText('L O V E   Y O U', WIDTH / 2, HEIGHT / 2);
 
       ctx.font = 'bold 12px Monospace';
