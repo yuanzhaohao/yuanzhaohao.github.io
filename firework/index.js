@@ -23,14 +23,28 @@ let hue = 120;
 let mx;
 let my;
 let isDown = false;
+const getPixelRatio = function() {
+  const backingStore = ctx.backingStorePixelRatio || 1;
+  return (window.devicePixelRatio || 1) / backingStore;
+};
+const ratio = getPixelRatio();
+console.log(ratio, cw, ch)
+
+canvas.style.width = cw + 'px';
+canvas.style.height = ch + 'px';
+
+canvas.width = cw * ratio;
+canvas.height = ch * ratio;
+// canvas.width = cw;
+// canvas.height = ch;
+
+// 放大倍数
+ctx.scale(ratio, ratio);
 
 const isTouch = 'ontouchstart' in window;
 const startEventName = isTouch ? 'touchstart' : 'mousedown';
 const moveEventName = isTouch ? 'touchmove' : 'mousemove';
 const endEventName = isTouch ? 'touchend' : 'mouseup';
-
-canvas.width = cw;
-canvas.height = ch;
 
 function random(min, max) {
   return Math.random() * (max - min) + min;
@@ -158,17 +172,25 @@ function loop() {
   hue = random(0, 360);
 
   ctx.globalCompositeOperation = 'destination-out';
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+  // ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
   ctx.fillRect(0, 0, cw, ch);
   ctx.globalCompositeOperation = 'lighter';
 
-  var i = fireworks.length;
+  ctx.fillStyle = 'pink';
+  ctx.font = 'bold 24px arial';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('520 ❤ 1314', cw / 2, ch / 2);
+  // ctx.scale(ratio, ratio);
+
+
+  let i = fireworks.length;
   while (i--) {
     fireworks[i].draw();
     fireworks[i].update(i);
   }
 
-  var i = particles.length;
+  i = particles.length;
   while (i--) {
     particles[i].draw();
     particles[i].update(i);
