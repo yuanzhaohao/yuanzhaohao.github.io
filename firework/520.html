@@ -174,7 +174,7 @@
       txtCanvas.width = WIDTH;
       txtCanvas.height = HEIGHT;
 
-      txtCtx.font = 'bold 40px Sans-serif';
+      txtCtx.font = `bold ${parseInt(37 / 320 * window.innerWidth, 10)}px Sans-serif`;
       txtCtx.textAlign = 'center';
       txtCtx.baseline = 'middle';
       txtCtx.fillText('L O V E   Y O U', WIDTH / 2, HEIGHT / 2);
