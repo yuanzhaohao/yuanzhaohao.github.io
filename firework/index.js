@@ -11,8 +11,8 @@ const requestAnimFrame = (function() {
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-const cw = window.innerWidth;
-const ch = window.innerHeight;
+let cw = window.innerWidth;
+let ch = window.innerHeight;
 const fireworks = [];
 const particles = [];
 let limiterTotal = 5;
@@ -23,28 +23,22 @@ let hue = 120;
 let mx;
 let my;
 let isDown = false;
+const isTouch = 'ontouchstart' in window;
+const startEventName = isTouch ? 'touchstart' : 'mousedown';
+const moveEventName = isTouch ? 'touchmove' : 'mousemove';
+const endEventName = isTouch ? 'touchend' : 'mouseup';
 const getPixelRatio = function() {
   const backingStore = ctx.backingStorePixelRatio || 1;
   return (window.devicePixelRatio || 1) / backingStore;
 };
 const ratio = getPixelRatio();
-console.log(ratio, cw, ch)
 
 canvas.style.width = cw + 'px';
 canvas.style.height = ch + 'px';
 
 canvas.width = cw * ratio;
 canvas.height = ch * ratio;
-// canvas.width = cw;
-// canvas.height = ch;
-
-// 放大倍数
 ctx.scale(ratio, ratio);
-
-const isTouch = 'ontouchstart' in window;
-const startEventName = isTouch ? 'touchstart' : 'mousedown';
-const moveEventName = isTouch ? 'touchmove' : 'mousemove';
-const endEventName = isTouch ? 'touchend' : 'mouseup';
 
 function random(min, max) {
   return Math.random() * (max - min) + min;
@@ -180,7 +174,7 @@ function loop() {
   ctx.font = `bold ${12 * ratio}px arial`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText('Love You Forever', cw / 2, ch / 2 - 50);
+  ctx.fillText('Love You Forever', cw / 2, ch / 2 - 10);
 
   let i = fireworks.length;
   while (i--) {
@@ -213,15 +207,15 @@ function loop() {
   }
 }
 
+canvas.addEventListener(startEventName, function (e) {
+  e.preventDefault();
+  isDown = true;
+});
+
 canvas.addEventListener(moveEventName, function(e) {
   const p = isTouch ? e.touches[0] : e;
   mx = p.pageX - canvas.offsetLeft;
   my = p.pageY - canvas.offsetTop;
-});
-
-canvas.addEventListener(startEventName, function(e) {
-  e.preventDefault();
-  isDown = true;
 });
 
 canvas.addEventListener(endEventName, function(e) {
