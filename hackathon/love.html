@@ -15,6 +15,7 @@
       padding: 0;
       margin: 0;
     }
+
     html,
     body {
       height: 100%;
@@ -163,14 +164,14 @@
       var HEIGHT = c.height = window.innerHeight;
       var imgData = null;
       var idx = null;
-      var skip = 2;
+      var skip = Math.round(2 / 320 * window.innerWidth);
       var circles = [];
       var circle = null;
       var a = null;
       var clickToggle = false;
       var boxList = [];
       var box = null;
-      var fontSize = parseInt(35 / 320 * window.innerWidth, 10);
+      var fontSize = parseInt(37 / 320 * window.innerWidth, 10);
 
       txtCanvas.width = WIDTH;
       txtCanvas.height = HEIGHT;
@@ -193,7 +194,7 @@
               HEIGHT / 2 + Math.sin(a) * WIDTH,
               x,
               y,
-              Math.random() * 2
+              Math.random() * skip
             );
             circles.push(circle);
           }
@@ -204,9 +205,9 @@
         box = new Box(
           WIDTH * Math.random(),
           HEIGHT * Math.random(),
-          2,
-          2,
-          2 + Math.random() * 2
+          skip,
+          skip,
+          skip + Math.random() * skip
         );
         boxList.push(box);
       }
