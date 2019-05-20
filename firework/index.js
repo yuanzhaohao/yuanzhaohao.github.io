@@ -180,7 +180,7 @@ function loop() {
   ctx.font = `bold ${12 * ratio}px arial`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText('520 ❤ 1314', cw / 2, ch / 2 - 50);
+  ctx.fillText('Love You Forever', cw / 2, ch / 2 - 50);
 
   let i = fireworks.length;
   while (i--) {
