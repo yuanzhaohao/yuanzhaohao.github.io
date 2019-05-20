@@ -180,9 +180,7 @@ function loop() {
   ctx.font = 'bold 24px arial';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText('520 ❤ 1314', cw / 2, ch / 2);
-  // ctx.scale(ratio, ratio);
-
+  ctx.fillText('520 ❤ 1314', cw / 2, ch / 2 - 50);
 
   let i = fireworks.length;
   while (i--) {
