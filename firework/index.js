@@ -17,7 +17,7 @@ const fireworks = [];
 const particles = [];
 let limiterTotal = 5;
 let limiterTick = 0;
-let timerTotal = 80;
+let timerTotal = 24;
 let timerTick = 0;
 let hue = 120;
 let mx;
@@ -206,6 +206,107 @@ function loop() {
     limiterTick++;
   }
 }
+
+var Box = function (x, y, w, h, s) {
+  this.x = x;
+  this.y = y;
+  this.w = w;
+  this.h = h;
+  this.s = s;
+  this.a = Math.random() * Math.PI * 2;
+  this.hue = Math.random() * 360;
+};
+
+Box.prototype = {
+  constructor: Box,
+  update: function () {
+    this.a += Math.random() * 0.5 - 0.25;
+    this.x += Math.cos(this.a) * this.s;
+    this.y += Math.sin(this.a) * this.s;
+    this.hue += 5;
+    if (this.x > WIDTH) this.x = 0;
+    else if (this.x < 0) this.x = WIDTH;
+    if (this.y > HEIGHT) this.y = 0;
+    else if (this.y < 0) this.y = HEIGHT;
+  },
+  render: function (ctx) {
+    ctx.save();
+    ctx.fillStyle = 'hsla(' + this.hue + ', 100%, 50%, 1)';
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.a);
+    ctx.fillRect(-this.w, -this.h / 2, this.w, this.h);
+    ctx.restore();
+  }
+};
+
+var Circle = function (x, y, tx, ty, r) {
+  this.x = x;
+  this.y = y;
+  this.ox = x;
+  this.oy = y;
+  this.tx = tx;
+  this.ty = ty;
+  this.lx = x;
+  this.ly = y;
+  this.r = r;
+  this.br = r;
+  this.a = Math.random() * Math.PI * 2;
+  this.sx = Math.random() * 0.5;
+  this.sy = Math.random() * 0.5;
+  this.o = Math.random() * 1;
+  this.delay = Math.random() * 200;
+  this.delayCtr = 0;
+  this.hue = Math.random() * 360;
+};
+
+Circle.prototype = {
+  constructor: Circle,
+  update: function () {
+
+    if (this.delayCtr < this.delay) {
+      this.delayCtr++;
+      return;
+    }
+
+    this.hue += 1;
+    this.a += 0.1;
+
+    this.lx = this.x;
+    this.ly = this.y;
+
+    if (!clickToggle) {
+      this.x += (this.tx - this.x) * this.sx;
+      this.y += (this.ty - this.y) * this.sy;
+    } else {
+      this.x += (this.ox - this.x) * this.sx;
+      this.y += (this.oy - this.y) * this.sy;
+    }
+
+
+    this.r = this.br + Math.cos(this.a) * (this.br * 0.5);
+  },
+  render: function (ctx) {
+
+    ctx.save();
+    ctx.globalAlpha = this.o;
+    ctx.fillStyle = 'hsla(' + this.hue + ', 100%, 50%, 1)';
+    ctx.translate(this.x, this.y);
+    ctx.beginPath();
+    ctx.arc(0, 0, this.r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    if (clickToggle) {
+      ctx.save();
+      ctx.strokeStyle = 'hsla(' + this.hue + ', 100%, 50%, 1)';
+      ctx.beginPath();
+      ctx.moveTo(this.lx, this.ly);
+      ctx.lineTo(this.x, this.y);
+      ctx.stroke();
+      ctx.restore();
+    }
+  }
+};
 
 canvas.addEventListener(startEventName, function (e) {
   e.preventDefault();
