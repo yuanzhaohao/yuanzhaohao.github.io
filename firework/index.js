@@ -174,6 +174,7 @@ function loop() {
   ctx.font = `bold ${12 * ratio}px arial`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
+  ctx.fillText('Miss Pan', cw / 2, ch / 2 - 20 - 12 * ratio);
   ctx.fillText('Love You Forever', cw / 2, ch / 2 - 10);
 
   let i = fireworks.length;
@@ -239,7 +240,7 @@ Box.prototype = {
   }
 };
 
-var Circle = function (x, y, tx, ty, r) {
+const Circle = function (x, y, tx, ty, r) {
   this.x = x;
   this.y = y;
   this.ox = x;
