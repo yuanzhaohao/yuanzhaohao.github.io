@@ -15,12 +15,12 @@
       padding: 0;
       margin: 0;
     }
-
     html,
     body {
       height: 100%;
       position: relative;
       width: 100%;
+      overflow: hidden;
     }
 
     canvas {
@@ -212,9 +212,31 @@
         boxList.push(box);
       }
 
-
       c.addEventListener('click', function (e) {
         clickToggle = !clickToggle;
+      });
+
+      var startX = 0;
+      var startY = 0;
+      var startTime = 0;
+
+      c.addEventListener('touchstart', function (e) {
+        e.preventDefault();
+        const p = e.changedTouches[0];
+        startX = p.screenX;
+        startY = p.screenY;
+        startTime = +new Date();
+      });
+
+      c.addEventListener('touchend', function (e) {
+        e.preventDefault();
+        const p = e.changedTouches[0];
+        const intervalX = Math.abs(p.screenX - startX);
+        const intervalY = Math.abs(p.screenY - startY);
+        const intervalTime = +new Date() - startTime;
+        if (intervalX < 50 && intervalY < 50 && intervalTime < 500) {
+          clickToggle = !clickToggle;
+        }
       });
 
       requestAnimationFrame(function loop() {
