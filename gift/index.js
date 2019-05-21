@@ -208,7 +208,7 @@ function loop() {
   }
 }
 
-var Box = function (x, y, w, h, s) {
+var Box = function(x, y, w, h, s) {
   this.x = x;
   this.y = y;
   this.w = w;
@@ -220,7 +220,7 @@ var Box = function (x, y, w, h, s) {
 
 Box.prototype = {
   constructor: Box,
-  update: function () {
+  update: function() {
     this.a += Math.random() * 0.5 - 0.25;
     this.x += Math.cos(this.a) * this.s;
     this.y += Math.sin(this.a) * this.s;
@@ -230,17 +230,17 @@ Box.prototype = {
     if (this.y > HEIGHT) this.y = 0;
     else if (this.y < 0) this.y = HEIGHT;
   },
-  render: function (ctx) {
+  render: function(ctx) {
     ctx.save();
     ctx.fillStyle = 'hsla(' + this.hue + ', 100%, 50%, 1)';
     ctx.translate(this.x, this.y);
     ctx.rotate(this.a);
     ctx.fillRect(-this.w, -this.h / 2, this.w, this.h);
     ctx.restore();
-  }
+  },
 };
 
-const Circle = function (x, y, tx, ty, r) {
+const Circle = function(x, y, tx, ty, r) {
   this.x = x;
   this.y = y;
   this.ox = x;
@@ -262,8 +262,7 @@ const Circle = function (x, y, tx, ty, r) {
 
 Circle.prototype = {
   constructor: Circle,
-  update: function () {
-
+  update: function() {
     if (this.delayCtr < this.delay) {
       this.delayCtr++;
       return;
@@ -283,11 +282,9 @@ Circle.prototype = {
       this.y += (this.oy - this.y) * this.sy;
     }
 
-
     this.r = this.br + Math.cos(this.a) * (this.br * 0.5);
   },
-  render: function (ctx) {
-
+  render: function(ctx) {
     ctx.save();
     ctx.globalAlpha = this.o;
     ctx.fillStyle = 'hsla(' + this.hue + ', 100%, 50%, 1)';
@@ -306,10 +303,10 @@ Circle.prototype = {
       ctx.stroke();
       ctx.restore();
     }
-  }
+  },
 };
 
-canvas.addEventListener(startEventName, function (e) {
+canvas.addEventListener(startEventName, function(e) {
   e.preventDefault();
   isDown = true;
 });
