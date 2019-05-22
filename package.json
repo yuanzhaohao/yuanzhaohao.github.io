@@ -18,7 +18,9 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "node scripts/dev.js",
-    "build": "node scripts/build.js",
+    "prod": "node scripts/prod.js",
+    "format": "npm run format:ts & npm run format:js",
+    "format:ts": "prettier --parser typescript './src/**/*.{ts,tsx}' --write",
     "format:js": "prettier './firwork/**/*.js' --write"
   },
   "lint-staged": {
