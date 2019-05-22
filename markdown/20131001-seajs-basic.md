@@ -174,4 +174,4 @@ highcharts.js 里面使用 define 定义模块，利用`require()`方法把需�
 
 用浏览器打开 highcharts.html，会出现下面的页面！
 
-（seajs 的具体每一个方法，请看下一篇文章！）
+![seajs-highcharts](https://yuanzhaohao.github.io/markdown/images/seajs-highcharts.png)

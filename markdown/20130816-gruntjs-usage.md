@@ -17,19 +17,19 @@ gruntjs 主要有以下一些作用：
 
 下面我就按照官方提供的例子讲解吧（速战速决）！
 
-首先新建一个 gruntjs 目录（建了一个 gruntjs-again），在这个目录下面新建一个 package.json 的文件。在这个文件输入一段 json 格式的字符串   
+首先新建一个 gruntjs 目录（建了一个 gruntjs-again），在这个目录下面新建一个 package.json 的文件。在这个文件输入一段 json 格式的字符串  
  { "name": "gruntjs-again", "version": "0.1.0", "author": "yzh", "description": "gruntjs-again wonderfull", "devDependencies": { "grunt": "~0.4.1", "grunt-contrib-jshint": "~0.6.0", "grunt-contrib-nodeunit": "~0.2.0", "grunt-contrib-uglify": "~0.2.2" } }
 
 打开命令行，进入到这个目录下面，输入`npm install`，安装依赖库；
 
-安装完依赖库之后，新建一个叫 Gruntfile.js 的文件，并输入以下代码（当然这是官方的 demo）   
+安装完依赖库之后，新建一个叫 Gruntfile.js 的文件，并输入以下代码（当然这是官方的 demo）  
  module.exports = function(grunt) { // Project configuration. grunt.initConfig({ pkg: grunt.file.readJSON('package.json'), uglify: { options: { banner: '/_! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> _/\n' }, build: { src: 'src/<%= pkg.name %>.js', dest: 'build/<%= pkg.name %>.min.js' } } }); // Load the plugin that provides the "uglify" task. grunt.loadNpmTasks('grunt-contrib-uglify'); // Default task(s). grunt.registerTask('default', ['uglify']); }; 按照代码中的提示，在根目录下新建一个 src 和 build 的文件夹，再在 src 文件夹下面新建一个和 name 相同的文件，我得 package.json 的 name 是 gruntjs-again，那就新建一个 gruntjs-again.js 文件。
 
 回到命令行，输入`grunt`执行 Gruntfile.js
 
 就会出现以下的结果
 
-![gruntjs-usage](./images/gruntjs-usage-1.png)
+![gruntjs-usage](https://yuanzhaohao.github.io/markdown/images/gruntjs-usage-1.png)
 
 #### gruntjs 进阶篇
 
@@ -69,7 +69,7 @@ gruntjs 主要有以下一些作用：
 
 新建以下一些文件
 
-![gruntjs-usage](./images/gruntjs-usage-1.png)
+![gruntjs-usage](https://yuanzhaohao.github.io/markdown/images/gruntjs-usage-2.png)
 
 新建 Gruntfile.js 文件，在 Gruntfile.js 文件输入以下代码
 
