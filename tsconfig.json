@@ -6,8 +6,6 @@
     "jsx": "react",
     "moduleResolution": "node",
     "rootDir": "./src",
-    "outDir": "./publish/es",
-    "declarationDir": "./publish/es",
     "strict": false,
     "declaration": true,
     "strictFunctionTypes": false,
@@ -18,6 +16,12 @@
       "dashkit-ui": ["src/"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "custom.d.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "./src/**/*.svg",
+    "./src/**/*.json",
+    "./typings/*.ts"
+  ],
+  "exclude": ["./node_modules"]
 }
