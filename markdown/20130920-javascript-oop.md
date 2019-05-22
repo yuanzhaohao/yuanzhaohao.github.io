@@ -373,5 +373,3 @@ in 操作符：判断某个对象是否含有某个属性，不管该属性是�
     t2.friends.push( 'cai' );
     console.log( t2.friends );
     console.log( person.friends );
-
-> 今天对 Javascript oop 进行了一些总结，从这些情况来看，我可以看到我的 Javascript 基础还有待提高。先回去吧，快被蚊子咬惨了。。。
