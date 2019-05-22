@@ -12,6 +12,7 @@ exports.resolve = function(dir) {
 exports.getEntry = function(globPath) {
   const files = Array.prototype.concat(
     glob.sync(path.join(globPath, './*.tsx')),
+    glob.sync(path.join(globPath, './*.ts')),
     glob.sync(path.join(globPath, './*.js')),
   );
   const entries = {};

@@ -146,10 +146,6 @@ module.exports = {
           name: 'fonts/[name].[hash:7].[ext]',
         },
       },
-      {
-        test: /\.json$/,
-        loader: 'json-loader',
-      },
     ],
   },
   optimization: {
