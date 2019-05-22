@@ -35,10 +35,17 @@
     }
   },
   "devDependencies": {
+    "chalk": "^2.4.2",
+    "express": "^4.17.0",
+    "fs-extra": "^8.0.1",
+    "glob": "^7.1.4",
     "husky": "^2.2.0",
     "lint-staged": "^8.1.6",
+    "portfinder": "^1.0.20",
     "prettier": "^1.17.0",
+    "react-dev-utils": "^9.0.1",
     "tslint": "^5.16.0",
-    "tslint-react": "^4.0.0"
+    "tslint-react": "^4.0.0",
+    "webpack": "^4.32.1"
   }
 }
