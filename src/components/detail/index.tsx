@@ -36,7 +36,7 @@ class Detail extends React.PureComponent<DetailProps, DetailState> {
     const { dataSource } = this.state;
 
     return (
-      <Grid className="app-page" fluid>
+      <Grid fluid>
         <Row center="xs">
           <Col xs={12} md={10} lg={8}>
             {dataSource && dataSource.markdown ? (

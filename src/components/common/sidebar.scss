@@ -1,32 +1,41 @@
 @import 'dashkit-ui/es/style/theme.scss';
 
 .sidebar {
+  position: relative;
+  padding-bottom: 24px;
 
-  &-header {
+  &-title {
     position: relative;
     display: flex;
     width: 100%;
-    height: 72px;
+    height: 60px;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     z-index: 1;
     background-color: #12263f;
+    color: #f7f7f7;
+    font-size: 24px;
+    font-weight: 700;
+  }
 
-    &-title {
-      color: #2c7be5;
-      font-size: 20px;
-      font-weight: 700;
-    }
+  &-user {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    border-top: 1px solid #1e3a5c;
+    padding: 16px 24px;
+  }
 
-    &-logo {
-      width: 40px;
-      height: 40px;
-      margin-left: 7px;
-      background-image: url('/images/photo.jpg');
-      border-radius: 50%;
-      background-size: cover;
-      background-position: center;
-    }
+  &-logo {
+    width: 50px;
+    height: 50px;
+    background-image: url('/static/photo.jpg');
+    border-radius: 50%;
+    background-size: contain;
+    // background-position: center;
   }
 }

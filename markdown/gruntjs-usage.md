@@ -27,7 +27,23 @@ gruntjs 主要有以下一些作用：
 
 打开命令行，进入到这个目录下面，输入`npm install`，安装依赖库；
 
-安装完依赖库之后，新建一个叫 Gruntfile.js 的文件，并输入以下代码（当然这是官方的 demo） module.exports = function(grunt) { // Project configuration. grunt.initConfig({ pkg: grunt.file.readJSON('package.json'), uglify: { options: { banner: '/_! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> _/\n' }, build: { src: 'src/<%= pkg.name %>.js', dest: 'build/<%= pkg.name %>.min.js' } } }); // Load the plugin that provides the "uglify" task. grunt.loadNpmTasks('grunt-contrib-uglify'); // Default task(s). grunt.registerTask('default', ['uglify']); }; 按照代码中的提示，在根目录下新建一个 src 和 build 的文件夹，再在 src 文件夹下面新建一个和 name 相同的文件，我得 package.json 的 name 是 gruntjs-again，那就新建一个 gruntjs-again.js 文件。
+安装完依赖库之后，新建一个叫 Gruntfile.js 的文件，并输入以下代码（当然这是官方的 demo）
+
+```javascript
+module.exports = function(grunt) {
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
+    uglify: {
+      options: { banner: '/_! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> _/\n' },
+      build: { src: 'src/<%= pkg.name %>.js', dest: 'build/<%= pkg.name %>.min.js' },
+    },
+  });
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.registerTask('default', ['uglify']);
+};
+```
+
+按照代码中的提示，在根目录下新建一个 src 和 build 的文件夹，再在 src 文件夹下面新建一个和 name 相同的文件，我得 package.json 的 name 是 gruntjs-again，那就新建一个 gruntjs-again.js 文件。
 
 回到命令行，输入`grunt`执行 Gruntfile.js
 
