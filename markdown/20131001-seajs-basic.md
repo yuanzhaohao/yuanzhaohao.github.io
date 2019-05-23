@@ -78,7 +78,7 @@ CommonJS 是针对服务器端的 nodejs 所设立的一个规范，在全局情
     		'highcharts-more': 'highcharts/3.0.5/highcharts-more.js'
     	}
     });
-    seajs.use( './static/js/highcharts' );
+    seajs.use( './static//js/highcharts' );
     </script>
     </body>
     </html>
@@ -174,4 +174,4 @@ highcharts.js 里面使用 define 定义模块，利用`require()`方法把需�
 
 用浏览器打开 highcharts.html，会出现下面的页面！
 
-![seajs-highcharts](https://yuanzhaohao.github.io/markdown/images/seajs-highcharts.png)
+![seajs-highcharts](/static/seajs-highcharts.png)

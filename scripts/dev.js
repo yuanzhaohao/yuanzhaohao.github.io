@@ -9,6 +9,7 @@ const openBrowser = require('react-dev-utils/openBrowser');
 const utils = require('./utils');
 const config = require('./config');
 const webpackConfig = require('./webpack.dev.config');
+const staticPath = utils.resolve(config.staticPath || './static');
 
 const HOST = config.host;
 const PORT = config.port;
@@ -20,7 +21,7 @@ const devMiddleware = require('webpack-dev-middleware')(compiler, {
   quiet: true,
 });
 
-app.use('/static', express.static(path.join(utils.resolve(config.srcPath), './static')));
+app.use('/static', express.static(staticPath));
 app.use(require('connect-history-api-fallback')());
 app.use(devMiddleware);
 

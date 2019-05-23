@@ -17,8 +17,8 @@ function createXHR() {
   if (typeof XMLHttpRequest !== 'undefined') {
     return new XMLHttpRequest();
   } else if (ActiveXObject !== 'undefined') {
-    var version = ['MSXML2.XMLHttp.6.0', 'MSXML2.XMLHttp.3.0', 'MSXML2.XMHttp'],
-      len = version.length;
+    var version = ['MSXML2.XMLHttp.6.0', 'MSXML2.XMLHttp.3.0', 'MSXML2.XMHttp'];
+    var len = version.length;
     for (var i = 0; i < len; i++) {
       try {
         new ActiveXObject(version[i]);

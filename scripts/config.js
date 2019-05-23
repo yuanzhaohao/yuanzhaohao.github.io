@@ -6,7 +6,7 @@ const PORT = 6006;
 module.exports = {
   srcPath: './src',
   distPath: './',
-  mockPath: './mock',
+  staticPath: './static',
   mockData: false,
   optimizeCommon: {
     'vendor-react': ['react', 'react-dom', 'react-router-dom'],

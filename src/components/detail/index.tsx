@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { Spin } from 'dashkit-ui';
+import { Spin, Grid } from 'dashkit-ui';
 import { RouteComponentProps, match } from 'react-router-dom';
 import './style.scss';
+
+const { Row, Col } = Grid;
 
 type DetailProps = RouteComponentProps & {
   match: match<{ name?: string }>;
@@ -34,20 +36,24 @@ class Detail extends React.PureComponent<DetailProps, DetailState> {
     const { dataSource } = this.state;
 
     return (
-      <div className="detail-container">
-        {dataSource && dataSource.markdown ? (
-          <div
-            className="app-page-info"
-            dangerouslySetInnerHTML={{
-              __html: dataSource.markdown,
-            }}
-          />
-        ) : (
-          <div className="page-loading">
-            <Spin text="Loading..." spinning={true} />
-          </div>
-        )}
-      </div>
+      <Grid className="app-page" fluid>
+        <Row center="xs">
+          <Col xs={12} md={10} lg={8}>
+            {dataSource && dataSource.markdown ? (
+              <div
+                className="detail-container"
+                dangerouslySetInnerHTML={{
+                  __html: dataSource.markdown,
+                }}
+              />
+            ) : (
+              <div className="page-loading">
+                <Spin text="Loading..." spinning={true} />
+              </div>
+            )}
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }

@@ -10,7 +10,7 @@
 - 文档对象模型（DOM）
 - 浏览器对象对象模型（BOM）
 
-![javascript-composition](https://yuanzhaohao.github.io/markdown/images/javascript-composition.png)
+![javascript-composition](/static/javascript-composition.png)
 
 ##### ECMAScript
 
@@ -33,7 +33,7 @@ ECMAScript 至今已经出现 6 个版本了，今年 5 月份吧，ECMAScript �
 
 在 DOM 中，上面的 html 代码会被映射成一个分层节点图。
 
-![javascript-tree](https://yuanzhaohao.github.io/markdown/images/javascript-tree.png)
+![javascript-tree](/static/javascript-tree.png)
 
 所谓 DOM（Document Object Model）操作，我觉得就是指通过 DOM 这套 API，把文档节点转换成对象；
 
@@ -380,7 +380,7 @@ js 中有三个截取字符串的方法：substring()、substr()、以及 slice(
 
 当调用这个函数的时候，`var s = sum( 5, 10 );`，就会产生一个**运行期上下文**（函数每次执行，都会产生对应的运行期上下文，函数执行完毕后，运行期上下文就会被销毁。），运行期上下文定义了函数调用的执行环境。当运行期上下文被创建之后，就会复制该函数的 scope 属性中的对象到自己的作用域中，同时生成一个**活动对象**填入自己的作用域中。也就是说，此时该运行期上下文的作用链里面有两个对象，一个是全局对象，一个活动对象。
 
-![javascript-javascfipt-function-scope](https://yuanzhaohao.github.io/markdown/images/javascript-function-scope.png)
+![javascript-javascfipt-function-scope](/static/javascript-function-scope.png)
 
 值得一提的是，全局对象的访问会排在活动对象的前面，假如要访问某个变量，那么就会先查看活动对象，然后再查看全局对象，因此标识符的优化，在 js 优化中也是重要的一环。
 
@@ -401,7 +401,7 @@ js 中有三个截取字符串的方法：substring()、substr()、以及 slice(
 
 由上个例子可以知道，创建这个闭包之后，该闭包的作用域链就会填入两个对象：全局对象和 sum 函数执行时的活动对象。当执行这个闭包的时候，闭包本身也是函数，因此它也会创建一个运行期上下文，同时把闭包的作用域链的全局对象和 sum 函数的活动对象填入到自己的作用域链中，同时会生成自己的活动对象，填入到作用域链的最顶端。关系如下图所示：
 
-![javascript-javascfipt-closure-scope](https://yuanzhaohao.github.io/markdown/images/javascript-closure-scope.png)
+![javascript-javascfipt-closure-scope](/static/javascript-closure-scope.png)
 
 这里又提到了**匿名函数**，这里也扯一下匿名函数吧。
 

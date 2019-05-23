@@ -342,7 +342,7 @@ require 的参数值 必须 是字符串直接量。
 
 **提示**：`exports` 仅仅是 `module.exports` 的一个引用。在 `factory` 内部给 `exports` 重新赋值时，并不会改变 `module.exports` 的值。因此给 `exports` 赋值是无效的，不能用来更改模块接口。
 
-另外，值得一提的是，一般可以在两个地方调用`exports`变量，一个在`seajs.use()`里面，一个在别的模块里面调用。 define( function( require, exports, module ) { exports.a = 'call highcharts'; }); seajs.use( './static/js/highcharts' ,function( highcharts ) { console.log( highcharts.a ) });
+另外，值得一提的是，一般可以在两个地方调用`exports`变量，一个在`seajs.use()`里面，一个在别的模块里面调用。 define( function( require, exports, module ) { exports.a = 'call highcharts'; }); seajs.use( './static//js/highcharts' ,function( highcharts ) { console.log( highcharts.a ) });
 
     // test.js
     define(function(require, exports, module) {

@@ -4,7 +4,7 @@
 
 随着互联网的飞速发展，前端开发越来越复杂。本文将从实际项目中遇到的问题出发，讲述模块化能解决哪些问题，以及如何使用 Sea.js 进行前端的模块化开发。
 
-![seajs-logo](https://yuanzhaohao.github.io/markdown/images/seajs-logo.jpg)
+![seajs-logo](/static/seajs-logo.jpg)
 
 #### 恼人的命名冲突
 
