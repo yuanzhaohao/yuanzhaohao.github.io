@@ -12,7 +12,24 @@ ajax 技术的核心在于 XMLHttpRequest 对象（简称 XHR），它允许异�
 
 创建的 XHR 对象的时候，有以下需要注意的问题：IE7+、Firefox、Opera、Chrome 和 Safari 都支持原生的 XHR 对象，所以在这些浏览器中创建 XHR 对象，直接 new XMLHttpRequest()就可以了。然而，在 IE 早期的版本，是利用 ActiveX 对象生成的。 **兼容性比较好的创建 XHR 对象代码**
 
-function createXHR() { if( typeof XMLHttpRequest !== 'undefined' ) { return new XMLHttpRequest(); } else if( ActiveXObject !== 'undefined' ) { var version = [ 'MSXML2.XMLHttp.6.0', 'MSXML2.XMLHttp.3.0', 'MSXML2.XMHttp'], len = version.length; for( var i = 0; i < len; i++ ) { try{ new ActiveXObject( version[i] ); arguments.callee.activeXString = version[i]; break; } catch( ex ) { } } return new ActiveXObject( arguments.callee.activeXString ); } }
+```javascript
+function createXHR() {
+  if (typeof XMLHttpRequest !== 'undefined') {
+    return new XMLHttpRequest();
+  } else if (ActiveXObject !== 'undefined') {
+    var version = ['MSXML2.XMLHttp.6.0', 'MSXML2.XMLHttp.3.0', 'MSXML2.XMHttp'],
+      len = version.length;
+    for (var i = 0; i < len; i++) {
+      try {
+        new ActiveXObject(version[i]);
+        arguments.callee.activeXString = version[i];
+        break;
+      } catch (ex) {}
+    }
+    return new ActiveXObject(arguments.callee.activeXString);
+  }
+}
+```
 
 #### XHR 对象的用法
 

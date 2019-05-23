@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Spin } from 'dashkit-ui';
 import { RouteComponentProps, match } from 'react-router-dom';
+import './style.scss';
 
 type DetailProps = RouteComponentProps & {
   match: match<{ name?: string }>;
