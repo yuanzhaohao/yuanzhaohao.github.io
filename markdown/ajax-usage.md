@@ -22,35 +22,36 @@ function createXHR() { if( typeof XMLHttpRequest !== 'undefined' ) { return new 
 
 ##### 同步请求
 
-    var xhr = createXHR();
-    xhr.open( 'get', 'fuxi.html', false );
-    xhr.send( null );
-    if( xhr.status === 200 || xhr.status === 304 ) {
-        console.log( xhr.responseText );
-    } else {
-    	console.log( 'error' );
-    }
+```javascript
+var xhr = createXHR();
+xhr.open('get', 'fuxi.html', false);
+xhr.send(null);
+if (xhr.status === 200 || xhr.status === 304) {
+  console.log(xhr.responseText);
+} else {
+  console.log('error');
+}
+```
 
 ##### 异步请求
 
-    var xhr = createXHR(),
-    	url = 'fuxi.html',
-    	params = [
-    		'id=1234',
-    		'limit=20'
-    	];
+```javascript
+var xhr = createXHR();
+var url = 'fuxi.html';
+var params = ['id=1234', 'limit=20'];
 
-    xhr.onreadystatechange = function() {
-    	if( xhr.readyState === 4 ) {
-    		if( xhr.status === 200 || xhr.status === 304 ) {
-    			console.log( xhr.responseText );
-    		} else {
-    			console.log( 'error' );
-    		}
-    	}
+xhr.onreadystatechange = function() {
+  if (xhr.readyState === 4) {
+    if (xhr.status === 200 || xhr.status === 304) {
+      console.log(xhr.responseText);
+    } else {
+      console.log('error');
     }
-    xhr.open( 'get', [ url, '?', params.join( '&' ) ].join( '' ), true );
-    xhr.send( null );
+  }
+};
+xhr.open('get', [url, '?', params.join('&')].join(''), true);
+xhr.send(null);
+```
 
 发送异步请求的时候，可以通过检测对象的 readyState 属性来判断请求/响应过程的当前活动阶段。
 

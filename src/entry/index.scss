@@ -1,10 +1,53 @@
+@import 'dashkit-ui/es/style/theme.scss';
+
 #app {
-  position: relative;
-  display: flex;
-  flex: 1 1;
   width: 100%;
-  height: 100vh;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  background-color: #f9fbfd;
+}
+
+.app {
+  &-layout {
+    width: calc(100vw - 250px);
+    margin-left: 250px;
+    overflow: hidden;
+  }
+
+  &-footer {
+    padding-bottom: 15px;
+    background-color: #f9fbfd;
+    text-align: center;
+  }
+}
+
+.app-content {
+  position: relative;
+  min-height: calc(100vh - 72px - 36px);
+  background-color: #fff;
+
+  code {
+    margin: 0 1px;
+    padding: .2em .4em;
+    border: 1px solid #eee;
+    background-color: #f2f4f5;
+    border-radius: 3px;
+    font-size: .9em;
+    color: #95aac9;
+  }
+
+  h2, h3, h4, h5 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    color: $gray-800;
+  }
+}
+
+.page-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  overflow: hidden;
 }

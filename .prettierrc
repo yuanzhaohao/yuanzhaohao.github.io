@@ -4,5 +4,7 @@
   "printWidth": 100,
   "proseWrap": "never",
   "arrowParens": "avoid",
+  "useTab": false,
+  "tabWidth": 2,
   "bracketSpacing": true
 }

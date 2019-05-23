@@ -1,7 +1,10 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { Spin } from 'dashkit-ui';
+import { RouteComponentProps, match } from 'react-router-dom';
 
-type DetailProps = RouteComponentProps;
+type DetailProps = RouteComponentProps & {
+  match: match<{ name?: string }>;
+};
 type DetailState = {
   dataSource?: {
     markdown: string;
@@ -16,14 +19,33 @@ class Detail extends React.PureComponent<DetailProps, DetailState> {
     };
   }
   public async componentDidMount() {
-    const dataSource = await import(`../../../markdown/ajax-usage.md`);
-    console.log(dataSource);
+    const { params } = this.props.match;
+    if (params && params.name) {
+      const dataSource = await import(`../../../markdown/${params.name}.md`);
+      console.log(params.name, dataSource);
+      this.setState({
+        dataSource,
+      });
+    }
   }
 
   public render() {
+    const { dataSource } = this.state;
+
     return (
       <div className="detail-container">
-        <h1>Detail</h1>
+        {dataSource && dataSource.markdown ? (
+          <div
+            className="app-page-info"
+            dangerouslySetInnerHTML={{
+              __html: dataSource.markdown,
+            }}
+          />
+        ) : (
+          <div className="page-loading">
+            <Spin text="Loading..." spinning={true} />
+          </div>
+        )}
       </div>
     );
   }
