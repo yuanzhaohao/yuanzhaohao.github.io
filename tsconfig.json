@@ -21,6 +21,7 @@
     "./src/**/*.tsx",
     "./src/**/*.svg",
     "./src/**/*.json",
+    "./markdown/**/*.md",
     "./typings/*.ts"
   ],
   "exclude": ["./node_modules"]
