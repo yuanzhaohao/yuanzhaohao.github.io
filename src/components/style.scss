@@ -69,6 +69,10 @@ ul {
   list-style-position: inside;
 }
 
+img {
+  max-width: 100%;
+}
+
 // prism code css
 code[class*="language-"] {
   margin: 0;
