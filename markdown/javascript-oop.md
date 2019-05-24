@@ -1,5 +1,5 @@
 <!--
-date: 2013-09-20
+date: 2013-09-22
 title: 基础篇-Javascript 面向对象
 description: Javascript 面向对象是非常非常重要的内容，要掌握 Javascript 的面向对象编程，是一件不容易的事情，因为还要去学习很多关于设计模式的东西。目前还在钻研《Javascript 设计模式》，似乎任何一本与设计模式挂钩的书都不会容易呀！
 -->

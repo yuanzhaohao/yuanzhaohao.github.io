@@ -1,3 +1,9 @@
+<!--
+date: 2013-09-23
+title: 基础篇-Javascript 事件处理
+description: 昨天遇到加号操作符的问题，今天恰好在**米憎**的博客里面看到一篇关于加号操作符的文章，所以就想写一篇文章总结一下；
+-->
+
 ## 基础篇-Javascript 事件处理
 
 > 事件处理是 JS 里面很有趣的东西。今天我主要从事件流、事件处理程序（三种不同方式的事件处理程序）、不同的事件类型来介绍事件处理。
@@ -8,14 +14,16 @@
 
 **事件冒泡**：就是指从事件开始触发的节点逐级向上传播到文档(document)
 
-    <html>
-    	<head>
-    		<title>简单的页面</title>
-    	</head>
-    	<body>
-    		<p>Helloworld!</p>
-    	</body>
-    </html>
+```html
+<html>
+  <head>
+    <title>简单的页面</title>
+  </head>
+  <body>
+    <p>Helloworld!</p>
+  </body>
+</html>
+```
 
 像上面的代码，如果点击了上面的`p`标签，那么按照事件冒泡的处理方式，`click`事件实惠按照下面的顺序进行传播： `<p>` - `<body>` - `<html>` - `document`
 
@@ -29,7 +37,9 @@
 
 首先，对于我们每一个学习网站开发的人来说，下面的代码，一定都会有所接触。
 
-    <input type="button" value="click me" name="click" onclick="alert( this.name );" />
+```html
+<input type="button" value="click me" name="click" onclick="alert( this.name );" />
+```
 
 这样的代码实际上有很多不好的地方。
 
@@ -47,15 +57,15 @@
 
 这种方式也就是讲一个函数赋值给一个事件处理程序属性。
 
-    var btn = document.getElementById( 'tx' );
-    btn.onclick = function() {
-    	console.log( 'clicked' );
-    	console.log( this === btn );	// true
-    }
+```js
+var btn = document.getElementById('tx');
+btn.onclick = function() {
+  console.log('clicked');
+  console.log(this === btn); // true
+};
+```
 
-删除该事件处理程序，只要把该属性设置为 null 就可以了。
-
-    btn.onclick = null;
+删除该事件处理程序，只要把该属性设置为 null 就可以了。`btn.onclick = null;`
 
 使用 DOM0 级事件处理程序，需要注意以下几点：
 
@@ -67,10 +77,16 @@
 
 DOM2 级事件处理程序定义了两个函数：`addEventListener()`和`removeEventListener()`；两者都是接收三个参数：事件名称、事件处理程序、是否在捕获阶段调用事件处理程序（true 为在捕获阶段调用事件处理程序，false 为在冒泡阶段调用事件处理程序）
 
-    btn.addEventListener( 'click', function() {
-    	console.log( 'clicked' );		// 'clicked'
-    	console.log( this === btn ); 	// true
-    }, false);
+```js
+btn.addEventListener(
+  'click',
+  function() {
+    console.log('clicked'); // 'clicked'
+    console.log(this === btn); // true
+  },
+  false,
+);
+```
 
 有两点需要注意的是：
 
@@ -86,14 +102,16 @@ DOM2 级事件处理程序定义了两个函数：`addEventListener()`和`remove
 
 IE 事件处理程序中，也有两个类似于 DOM2 级事件处理程序的函数：`attachEvent()`和`detachEvent()`。这两个函数都支持两个参数：事件名称以及事件处理程序函数。
 
-    var btn = document.getElementById( 'tx' );
-    btn.attachEvent( 'onclick', function() {
-    	alert( 'clicked' );
-    	alert( window === this );
-    });
-    btn.attachEvent( 'onclick', function() {
-    	alert( 'clicked2' );
-    });
+```js
+var btn = document.getElementById('tx');
+btn.attachEvent('onclick', function() {
+  alert('clicked');
+  alert(window === this);
+});
+btn.attachEvent('onclick', function() {
+  alert('clicked2');
+});
+```
 
 需要注意以下几点：
 
@@ -121,22 +139,38 @@ target 是指事件的目标；
 
 如果直接把事件处理程序指定给目标元素，则 this、currentTarget 和 target 包含相同的值。
 
-    btn.addEventListener( 'click', function( event ) {
-    	console.log( this === event.currentTarget );
-    	console.log( this === event.target );
-    }, false);
+```js
+btn.addEventListener(
+  'click',
+  function(event) {
+    console.log(this === event.currentTarget);
+    console.log(this === event.target);
+  },
+  false,
+);
+```
 
 上面的结果会返回两个`true`。
 
-    btn.addEventListener( 'click', function( event ) {
-    	console.log( this === event.currentTarget );
-    	console.log( this === event.target );
-    }, false);
+```js
+btn.addEventListener(
+  'click',
+  function(event) {
+    console.log(this === event.currentTarget);
+    console.log(this === event.target);
+  },
+  false,
+);
 
-    body.addEventListener( 'click', function( event ) {
-    	console.log( body === event.currentTarget );
-    	console.log( btn === event.target );
-    }, false);
+body.addEventListener(
+  'click',
+  function(event) {
+    console.log(body === event.currentTarget);
+    console.log(btn === event.target);
+  },
+  false,
+);
+```
 
 如果点击了 btn 按钮，那么将会输出：true、true、true、true；如果点击的是非 btn 的里面的东西，那么就会返回 true、false；
 
@@ -164,6 +198,7 @@ IE 里面的事件对象的获取有两种方式，如果没有为事件处理�
 
 **兼容 DOM 和 IE 的事件模块**
 
+```js
     function EventClass() {
 
     }
@@ -202,5 +237,6 @@ IE 里面的事件对象的获取有两种方式，如果没有为事件处理�
     		event.preventDefault ? event.preventDefault() : event.returnValue = false;
     	}
     };
+```
 
 （写得相对比较简单，哈哈。后面还会谈很多和事件处理有关的知识，熟话说：温故而知新。这句话还是说得很有道理的。不管怎么样，follow my heart，只要问心无愧就好！）

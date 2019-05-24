@@ -57,9 +57,7 @@ ECMAScript 至今已经出现 6 个版本了，今年 5 月份吧，ECMAScript �
 
 ECMAScript 有 5 种简单数据类型（Undefined、Null、Boolean、Number、String）和 1 种复杂数据类型（Object）
 
-由于 Javascript 是松散类型的，因此我们在使用这些数据类型的时候，有必要对这些数据类型进行判断。在判断数据类型的时候，undefined、number、String，我都会用 typeof 进行判断：
-
-    if( typeof n1 === 'string' )
+由于 Javascript 是松散类型的，因此我们在使用这些数据类型的时候，有必要对这些数据类型进行判断。在判断数据类型的时候，undefined、number、String，我都会用 typeof 进行判断：`if( typeof n1 === 'string' )`
 
 还有 function，我也是用 typeof 来判断，对于引用类型，比如 Object、Array 等，我一般会用 instanceof 来判断。
 
@@ -113,9 +111,11 @@ parseFloat 是返回浮点数，处理规则和 parseInt 差不多；
 
 首先来讲讲字符串的创建，有两种方式：第一使用 String 引用类型，第二种就是直接赋值；
 
-    var s1 = new String( 'test' ),
-    	s2 = 'test';
-    console.log( s1 === s2 );
+```js
+var s1 = new String('test'),
+  s2 = 'test';
+console.log(s1 === s2);
+```
 
 大家猜猜，以上的代码执行之后，会输出什么？
 
@@ -131,34 +131,40 @@ parseFloat 是返回浮点数，处理规则和 parseInt 差不多；
 
 上面的结果返回'e'
 
-    var str = 'Hello world';
-    console.log( str.charCodeAt( 1 ) );
+```js
+var str = 'Hello world';
+console.log(str.charCodeAt(1));
+```
 
 上面的结果返回：101
 
 **利用 charCodeAt()编写的获取字符串字节的函数：**
 
-    function getStrBytes( str ) {
-    	if( typeof str === 'string' ) {
-    		var len = i = str.length;
+```js
+function getStrBytes(str) {
+  if (typeof str === 'string') {
+    var len = (i = str.length);
 
-    		while( i-- ) {
-    			if( str.charCodeAt( i ) > 255 ) {
-    				len++;
-    			}
-    		}
-    		return len;
-    	}
-    	return 0;
+    while (i--) {
+      if (str.charCodeAt(i) > 255) {
+        len++;
+      }
     }
+    return len;
+  }
+  return 0;
+}
+```
 
-调用方法：getStrBytes( '噬魂 123' );
+调用方法：`getStrBytes( '噬魂 123' )`;
 
 **字符串的拼接：**
 
 **加（+）和加等于（+=）操作符**
 
-    str += 'one' + 'two';
+```js
+str += 'one' + 'two';
+```
 
 上面的代码运行的时候，会经过**4**个步骤：
 
@@ -170,62 +176,66 @@ parseFloat 是返回浮点数，处理规则和 parseInt 差不多；
 
 4、最后把结果赋值给 str；
 
-为避免临时字符串的产生，可以用下面的方式实现同样的效果：
-
-    str = str + 'one' + 'two';
+为避免临时字符串的产生，可以用下面的方式实现同样的效果：`str = str + 'one' + 'two';`
 
 **使用函数 concat()**
 
-    var str = 'hello '.concat( 'world!' );
+```js
+var str = 'hello '.concat('world!');
+```
 
 **使用数组（对于字节很长的字符串，是一个比较好的方法！）**
 
-    var str = ['hello', ' world!'].join('');
+```js
+var str = ['hello', ' world!'].join('');
+```
 
 **三种方式的比较**
 
 这里使用了 firejspt.js，这个小工具还不错，，下载地址：[http://code.google.com/p/firejspt/downloads/list](http://code.google.com/p/firejspt/downloads/list)
 
-    function test2() {
-    	var newStr = '',
-    		i = 1350000;
+```js
+function test2() {
+  var newStr = '',
+    i = 1350000;
 
-    	while( i-- ) {
-    		newStr += 'hello' + ' world!';
-    	}
-    }
+  while (i--) {
+    newStr += 'hello' + ' world!';
+  }
+}
 
-    function test1() {
-    	var newStr = '',
-    		arr = [],
-    		i = 1350000;
+function test1() {
+  var newStr = '',
+    arr = [],
+    i = 1350000;
 
-    	while( i-- ) {
-    		arr.push( 'hello', ' world!' );
-    	}
-    	newStr = arr.join( '' );
-    }
+  while (i--) {
+    arr.push('hello', ' world!');
+  }
+  newStr = arr.join('');
+}
 
-    function test3() {
-    	var newStr = '',
-    		i = 1350000;
+function test3() {
+  var newStr = '',
+    i = 1350000;
 
-    	while( i-- ) {
-    		newStr.concat( 'hello', ' world!' );
-    	}
-    }
+  while (i--) {
+    newStr.concat('hello', ' world!');
+  }
+}
 
-    jspt.test( function() {
-    	test1();
-    });
+jspt.test(function() {
+  test1();
+});
 
-    jspt.test( function() {
-    	test2();
-    });
+jspt.test(function() {
+  test2();
+});
 
-    jspt.test( function() {
-    	test3();
-    });
+jspt.test(function() {
+  test3();
+});
+```
 
 执行结果：
 
@@ -241,28 +251,34 @@ js 中有三个截取字符串的方法：substring()、substr()、以及 slice(
 
 当三者都是接受一个参数，并且这个参数为正整数的时候，其实三者是没有啥区别的；
 
-    var str = 'hello world';
-    console.log( str.substring( 3 ) );
-    console.log( str.substr( 3 ) );
-    console.log( str.slice( 3 ) );
+```js
+var str = 'hello world';
+console.log(str.substring(3));
+console.log(str.substr(3));
+console.log(str.slice(3));
+```
 
-三者的执行结果都是：'llo world'
+三者的执行结果都是：`'llo world'`
 
-当三者都是接受一个参数，并且这个参数为负整数的时候，substring 会把这个负数转换成 0，就相当于 substring(0)；而 substr 和 slice 都是从字符串逆序截取字符串
+当三者都是接受一个参数，并且这个参数为负整数的时候，substring 会把这个负数转换成 0，就相当于 `substring(0)；`而 substr 和 slice 都是从字符串逆序截取字符串
 
-    var str = 'hello world';
-    console.log( str.substring( 3 ) );
-    console.log( str.substr( 3 ) );
-    console.log( str.slice( 3 ) );
+```js
+var str = 'hello world';
+console.log(str.substring(3));
+console.log(str.substr(3));
+console.log(str.slice(3));
+```
 
 上面执行的结果分别为：'hello world'、'rld'、'rld'
 
 当三者接收两个参数，并且两个参数都是正数的时候，substring 和 slice 的返回结果都一样，而 substr 则不一样。三者的第一个参数都是指位置，substr 的第二个参数表示长度，而 substring 和 slice 都是表示位置；
 
-    var str = 'hello world';
-    console.log( str.substring( 3, 7 ) );
-    console.log( str.substr( 3, 7 ) );
-    console.log( str.slice( 3, 7 ) );
+```js
+var str = 'hello world';
+console.log(str.substring(3, 7));
+console.log(str.substr(3, 7));
+console.log(str.slice(3, 7));
+```
 
 上面执行的结果分别为：'lo w'、'lo worl'、'lo w'
 
@@ -281,59 +297,71 @@ js 中有三个截取字符串的方法：substring()、substr()、以及 slice(
 
 **模拟栈方法：**
 
-    var colors = [];
-    // 入栈
-    colors.push( 'red', 'green' );
-    // 出栈
-    colors.pop();
+```js
+var colors = [];
+// 入栈
+colors.push('red', 'green');
+// 出栈
+colors.pop();
+```
 
 **模拟队列方法：**
 
-    var colors = [];
-    // 入队
-    colors.push( 'red', 'green' );
-    // 出队
-    colors.shift();
+```js
+var colors = [];
+// 入队
+colors.push('red', 'green');
+// 出队
+colors.shift();
+```
 
 数组中，我认为最强悍的函数就是：**splice()**。它可以删除、插入、替换数组元素；
 
 具体用法：splice()至少接收**2**个参数，第一个参数代表起始位置，第二个参数代表删除的项数；举个例子
 
-    var colors = ['red', 'green', 'yellow'];
-    console.log( colors.splice( 0, 1 ) );
+```js
+var colors = ['red', 'green', 'yellow'];
+console.log(colors.splice(0, 1));
+```
 
-上面的代码会返回：["green", "yellow"]
+上面的代码会返回：`["green", "yellow"]`
 
 上面的例子是删除的用法，如果要删除第二项，那就是`colors.splice( 1, 1 )`
 
 其实这个函数最给力的是它可以**插入和替换**数组元素：
 
-    var colors = ['red', 'green', 'yellow'];
-    console.log( colors.splice( 0, 0, 'black' ) );
+```js
+var colors = ['red', 'green', 'yellow'];
+console.log(colors.splice(0, 0, 'black'));
+```
 
-上面的代码会在 red 元素后面插入 black，返回的结果是：["black", "red", "green", "yellow"]
+上面的代码会在 red 元素后面插入 black，返回的结果是：`["black", "red", "green", "yellow"]`
 
-    var colors = ['red', 'green', 'yellow'];
-    console.log( colors.splice( 0, 1, 'black' ) );
+```js
+var colors = ['red', 'green', 'yellow'];
+console.log(colors.splice(0, 1, 'black'));
+```
 
-上面的代码会先删除 red 元素，再插入 black，返回的结果是：["black", "green", "yellow"]；
+上面的代码会先删除 red 元素，再插入 black，返回的结果是：`["black", "green", "yellow"]；`
 
 举一个比较有趣的例子：**数组去重问题**
 
-    Array.prototype.delRepeat = function() {
-    	var i = this.length,
-    		obj = {};
+```js
+Array.prototype.delRepeat = function() {
+  var i = this.length,
+    obj = {};
 
-    	while( i-- ) {
-    		if( !obj[ this[i] ] ) {
-    			obj[ this[i] ] = true;
-    		} else {
-    			this.splice( i, 1 );
-    		}
-    	}
-
-    	return this;
+  while (i--) {
+    if (!obj[this[i]]) {
+      obj[this[i]] = true;
+    } else {
+      this.splice(i, 1);
     }
+  }
+
+  return this;
+};
+```
 
 上面是在 Array 的原型链添加 delRepeat()方法，调用方法是：arr.delRepeat();
 
@@ -343,20 +371,24 @@ js 中有三个截取字符串的方法：substring()、substr()、以及 slice(
 
 之所以会这样，是因为 ECMAScript 里面的参数是由内部的一个数组来表示的，也就是 arguments；
 
-    function add() {
-    	return arguments[0] + arguments[1];
-    }
-    console.log( add( 10, 20 ) );
+```js
+function add() {
+  return arguments[0] + arguments[1];
+}
+console.log(add(10, 20));
+```
 
 上面会输出：30；
 
 有一点值得注意，arguments 的值永远会与对应命名的参数的值保持同步。arguments 的长度由传入的参数的个数所决定，没有传递值的参数将会自动被赋值为 undefined；
 
-    function add( num1, num2 ) {
-    	arguments[1] = 10;
-    	return arguments[0] + num2;
-    }
-    console.log( add( 10, 20 ) );
+```js
+function add(num1, num2) {
+  arguments[1] = 10;
+  return arguments[0] + num2;
+}
+console.log(add(10, 20));
+```
 
 上面会输出：20；
 
@@ -374,9 +406,11 @@ js 中有三个截取字符串的方法：substring()、substr()、以及 slice(
 
 每一个函数被创建的时候，它的作用域链就会填充相关的数据。举个例子（假设它是全局环境下定义的函数）
 
-    function sum( num1, num2 ) {
-    	return num1 + num2;
-    }
+```js
+function sum(num1, num2) {
+  return num1 + num2;
+}
+```
 
 上面的代码中，当 sum 函数被创建的时候，它的 scope 属性里面，也就是它的作用域链里面会填入一个全局对象。
 
@@ -390,12 +424,14 @@ js 中有三个截取字符串的方法：substring()、substr()、以及 slice(
 
 **闭包：**闭包其实也是函数，只不过闭包比较特殊而已。它是**有能力访问其他函数作用域的函数**。举个例子
 
-    function sum( num1, num2 ) {
-    	return function() {
-    		return num1 + num2;
-    	}
-    }
-    console.log( sum( 5, 10 )() );
+```js
+function sum(num1, num2) {
+  return function() {
+    return num1 + num2;
+  };
+}
+console.log(sum(5, 10)());
+```
 
 从上面的代码来看，sum 函数返回的匿名函数就是一个闭包，为什么说它是闭包呢？原因很简单，因为它访问了 num1 和 num2 了。
 
@@ -407,9 +443,11 @@ js 中有三个截取字符串的方法：substring()、substr()、以及 slice(
 
 这里又提到了**匿名函数**，这里也扯一下匿名函数吧。
 
-    setTimeout( function() {
-    	//some code
-    }, 123)
+```js
+setTimeout(function() {
+  //some code
+}, 123);
+```
 
 上面的 setTimeout 里面的函数，就是一个匿名函数哈。
 
@@ -423,37 +461,43 @@ js 中有三个截取字符串的方法：substring()、substr()、以及 slice(
 
 昨天晚上在网上看到了一篇博客，里面提到一道有趣的题目
 
-    function test() {
-         this.name = 'taobao';
-         this.waitMes = function (){
-         //隔5秒钟执行this.name
-         }
-    }
+```js
+function test() {
+  this.name = 'taobao';
+  this.waitMes = function() {
+    //隔5秒钟执行this.name
+  };
+}
+```
 
 上面的题目要求是每隔 5 秒钟执行`this.name`，很明显是要用到`setInterval`函数。这里也得分一些情况吧，刚看到代码的时候，我还以为有很多面向对象的东西，其实如果没有太多要求，直接执行就好，因为 test 函数是在全局作用域下的，所以就不用考虑`setInterval`的问题了；
 
-    function test(){
-    	this.name = 'taobao';
-    	this.waitMes = function (){
-    		setInterval( function() {
-    			console.log( this.name );
-    		}, 2000);
-    	}
-    	this.waitMes();
-    }
-    test();
+```js
+function test() {
+  this.name = 'taobao';
+  this.waitMes = function() {
+    setInterval(function() {
+      console.log(this.name);
+    }, 2000);
+  };
+  this.waitMes();
+}
+test();
+```
 
 或者，像这样
 
-    (function test(){
-    	this.name = 'taobao';
-    	this.waitMes = function (){
-    		setInterval( function() {
-    			console.log( this.name );
-    		}, 2000);
-    	}
-    	this.waitMes();
-    })();
+```js
+(function test() {
+  this.name = 'taobao';
+  this.waitMes = function() {
+    setInterval(function() {
+      console.log(this.name);
+    }, 2000);
+  };
+  this.waitMes();
+})();
+```
 
 个人更推荐上面的第二种。上面的第二种是把函数声明转换成函数表达式直接执行的。
 
@@ -461,17 +505,21 @@ js 中有三个截取字符串的方法：substring()、substr()、以及 slice(
 
 函数声明是类似于下面的代码：
 
-    console.log( sum( 10, 10 ) );
-    function sum( num1, num2 ) {
-    	return num1 + num2;
-    }
+```js
+console.log(sum(10, 10));
+function sum(num1, num2) {
+  return num1 + num2;
+}
+```
 
 而函数表达式类似于下面这样的：
 
-    console.log( sum( 10, 10 ) );
-    var sum = function() {
-    	return num1 + num2;
-    }
+```js
+console.log(sum(10, 10));
+var sum = function() {
+  return num1 + num2;
+};
+```
 
 看到上面两段代码，很多人（包括今天以前的我）都以为输出的结果是一样的，但是事实上，第二段代码是会报错的，因为 sum 函数在执行`sum( 10, 10 )`的时候还没有初始化，这就是函数声明和函数表达式的最大区别：**Javascript 引擎会把函数声明提前执行，而函数表达式要等到 Javascript 引擎读取到那段代码之后才执行**；
 
@@ -481,34 +529,38 @@ js 中有三个截取字符串的方法：substring()、substr()、以及 slice(
 
 当使用`new`操作符实例化出一个实例的时候，情况有些特殊，因为`new`操作符会把 this 指向实例本身，而前文也提到`setInterval`的作用域是全局作用域的，所以它的 this 指向的是 window 对象，因此在`waitMes()`函数里面要把`this`对象赋值给`waitMes()`函数的局部变量。
 
-    function Test() {
-    	this.name = 'Yzh';
-    	this.waitMes = function() {
-    		var self = this;
-    		setInterval( function() {
-    			console.log( self.name );
-    		}, 5000);
-    	};
-    }
-    var t = new Test();
-    t.waitMes();
+```js
+function Test() {
+  this.name = 'Yzh';
+  this.waitMes = function() {
+    var self = this;
+    setInterval(function() {
+      console.log(self.name);
+    }, 5000);
+  };
+}
+var t = new Test();
+t.waitMes();
+```
 
 说到闭包，我们每一个初学者都会遇到下标的问题，在这里我花了一些时间去总结了一下解决的方法。
 
 **闭包下标问题**：请看下面的代码
 
-    function createF() {
-    	var result = [];
+```js
+function createF() {
+  var result = [];
 
-    	for( var i = 0; i < 10; i++ ) {
-    		result[i] = function() {
-    			console.log( i );
-    		}
-    	}
-    	return result;
-    }
-    var r = createF();
-    r[1]();
+  for (var i = 0; i < 10; i++) {
+    result[i] = function() {
+      console.log(i);
+    };
+  }
+  return result;
+}
+var r = createF();
+r[1]();
+```
 
 执行 result 数组里面的每一个子函数，控制台打印出来都是 10。首先来分析一下造成上面那种现象的原因吧。首先，result 数组里面的每一个函数都是闭包，这是毋庸置疑的，所以这些函数保存了`creatF()`函数的活动对象，而活动对象里面的`i`变量最终的值是 10，所以每一个 result 子函数的结果都是 10；
 
@@ -516,43 +568,49 @@ js 中有三个截取字符串的方法：substring()、substr()、以及 slice(
 
 1、在每一个 result 子函数里面使用局部变量把 i“存起来”；
 
-    function createF() {
-    	var result = [];
+```js
+function createF() {
+  var result = [];
 
-    	for( var i = 0; i < 10; i++ ) {
-    		result[i] = function() {
-    			var r = i;
-    			console.log( r );
-    		}
-    	}
-    	return result;
-    }
+  for (var i = 0; i < 10; i++) {
+    result[i] = function() {
+      var r = i;
+      console.log(r);
+    };
+  }
+  return result;
+}
+```
 
 2、加一层闭包，i 以函数参数形式传递给内层函数函数；
 
-    function createF() {
-    	var result = [];
+```js
+function createF() {
+  var result = [];
 
-    	for( var i = 0; i < 10; i++ ) {
-    		result[i] = function( num ) {
-    			return function() {
-    				console.log( num );
-    			}
-    		}( i );
-    	}
-    	return result;
-    }
+  for (var i = 0; i < 10; i++) {
+    result[i] = (function(num) {
+      return function() {
+        console.log(num);
+      };
+    })(i);
+  }
+  return result;
+}
+```
 
 3、使用 Function 对象实例化出一个函数；
 
-    function createF() {
-    	var result = [];
+```js
+function createF() {
+  var result = [];
 
-    	for( var i = 0; i < 10; i++ ) {
-    		result[i] = new Function("console.log(" + i + ");");
-    	}
-    	return result;
-    }
+  for (var i = 0; i < 10; i++) {
+    result[i] = new Function('console.log(' + i + ');');
+  }
+  return result;
+}
+```
 
 目前只发现以上三种写法，至于其他的，其实就是上面三种演变过来的。
 
