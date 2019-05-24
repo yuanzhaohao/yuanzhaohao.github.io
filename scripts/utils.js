@@ -5,7 +5,6 @@ const glob = require('glob');
 const chalk = require('chalk');
 const format = require('util').format;
 const yaml = require('js-yaml');
-const yamlFront = require('yaml-front-matter');
 
 exports.resolve = function(dir) {
   return path.join(__dirname, '..', dir || '');
@@ -89,8 +88,9 @@ exports.yamlFront = function(markdownText, options, loadSafe) {
   let result = {};
   const reg = /<!--(.*)\s?([^]+?)-->/;
   const metaMatch = reg.exec(markdownText);
-  let yamlOrJson;
-  if ((yamlOrJson = metaMatch[2])) {
+  if (metaMatch && metaMatch.length) {
+    const yamlOrJson = metaMatch[2];
+
     if (yamlOrJson.charAt(0) === '{') {
       result = JSON.parse(yamlOrJson);
     } else {

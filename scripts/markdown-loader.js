@@ -7,7 +7,6 @@ const md = require('markdown-it')({
   html: true,
 });
 const glob = require('glob');
-const yamlFront = require('yaml-front-matter');
 
 module.exports = function(source, options) {
   if (this.cacheable) {
