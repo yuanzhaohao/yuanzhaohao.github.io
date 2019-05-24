@@ -57,8 +57,10 @@
   flex: 1;
   overflow: hidden;
 }
-
-h2, h3, h4, h5 {
+h2 {
+  margin-top: 0px;
+}
+h3, h4, h5 {
   margin-top: 32px;
   margin-bottom: 12px;
   color: #343a40;
@@ -70,7 +72,9 @@ ul {
 }
 
 img {
+  display: block;
   max-width: 100%;
+  margin: 12px auto;
 }
 
 // prism code css
@@ -95,13 +99,9 @@ pre[class*="language-"] {
   color: #ccc;
 }
 
-pre[class*="language-"] {
+pre {
   padding: 16px 24px;
   margin-bottom: 0;
-}
-
-:not(pre)>code[class*="language-"],
-pre[class*="language-"] {
   background-color: #12263f;
 }
 

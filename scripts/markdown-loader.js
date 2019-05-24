@@ -21,14 +21,3 @@ module.exports = function(source, options) {
 
   return `module.exports = {` + `\n  markdown: ${JSON.stringify(md.render(source))},` + `};`;
 };
-
-function getDataMeta(markdownText) {
-  if (markdownText) {
-    const reg = /---(.*)\s?([^]+?)---/;
-    const metaMatch = markdownText.match(reg);
-    if (metaMatch && metaMatch.length) {
-      return yamlFront.loadFront(metaMatch[0]);
-    }
-  }
-  return {};
-}

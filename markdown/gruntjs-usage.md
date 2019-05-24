@@ -23,7 +23,22 @@ gruntjs 主要有以下一些作用：
 
 下面我就按照官方提供的例子讲解吧（速战速决）！
 
-首先新建一个 gruntjs 目录（建了一个 gruntjs-again），在这个目录下面新建一个 package.json 的文件。在这个文件输入一段 json 格式的字符串 { "name": "gruntjs-again", "version": "0.1.0", "author": "yzh", "description": "gruntjs-again wonderfull", "devDependencies": { "grunt": "~0.4.1", "grunt-contrib-jshint": "~0.6.0", "grunt-contrib-nodeunit": "~0.2.0", "grunt-contrib-uglify": "~0.2.2" } }
+首先新建一个 gruntjs 目录（建了一个 gruntjs-again），在这个目录下面新建一个 package.json 的文件。在这个文件输入一段 json 格式的字符串
+
+```json
+{
+  "name": "gruntjs-again",
+  "version": "0.1.0",
+  "author": "yzh",
+  "description": "gruntjs-again wonderfull",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-uglify": "~0.2.2"
+  }
+}
+```
 
 打开命令行，进入到这个目录下面，输入`npm install`，安装依赖库；
 

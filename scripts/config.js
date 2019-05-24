@@ -7,7 +7,7 @@ module.exports = {
   srcPath: './src',
   distPath: './',
   staticPath: './static',
-  mockData: false,
+  markdownPath: './markdown',
   optimizeCommon: {
     'vendor-react': ['react', 'react-dom', 'react-router-dom'],
     'vendor-lib': ['classnames'],

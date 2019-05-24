@@ -4,6 +4,8 @@ const path = require('path');
 const glob = require('glob');
 const chalk = require('chalk');
 const format = require('util').format;
+const yaml = require('js-yaml');
+const yamlFront = require('yaml-front-matter');
 
 exports.resolve = function(dir) {
   return path.join(__dirname, '..', dir || '');
@@ -63,4 +65,41 @@ exports.fatal = function(message) {
 exports.success = function() {
   const msg = format.apply(format, arguments);
   console.log(chalk.white(prefix), sep, msg);
+};
+
+exports.getDataCode = function(markdownText) {
+  if (markdownText) {
+    const reg = /```(.*)[js|json|javascript]\s?([^]+?)```/;
+    const sourceMatch = markdownText.match(reg);
+    if (sourceMatch && sourceMatch.length && sourceMatch[2]) {
+      return sourceMatch[2];
+    }
+  }
+  return '';
+};
+
+exports.yamlFront = function(markdownText, options, loadSafe) {
+  let contentKeyName =
+    options && typeof options === 'string'
+      ? options
+      : options && options.contentKeyName
+      ? options.contentKeyName
+      : '__content';
+  let passThroughOptions = options && typeof options === 'object' ? options : undefined;
+  let result = {};
+  const reg = /<!--(.*)\s?([^]+?)-->/;
+  const metaMatch = reg.exec(markdownText);
+  let yamlOrJson;
+  if ((yamlOrJson = metaMatch[2])) {
+    if (yamlOrJson.charAt(0) === '{') {
+      result = JSON.parse(yamlOrJson);
+    } else {
+      if (loadSafe) {
+        result = yaml.safeLoad(yamlOrJson, passThroughOptions);
+      } else {
+        result = yaml.load(yamlOrJson, passThroughOptions);
+      }
+    }
+  }
+  return result;
 };
