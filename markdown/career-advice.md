@@ -1,3 +1,9 @@
+<!--
+date: 2013-12-08
+title: 影响人一生的职业建议
+description: 一篇感觉还不错的励志文章，是前端牛人[Nicholas C.Zakas](http://www.nczonline.net/)写的。
+-->
+
 ## 影响人一生的职业建议
 
 > 一篇感觉还不错的励志文章，是前端牛人[Nicholas C.Zakas](http://www.nczonline.net/)写的。

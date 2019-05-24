@@ -77,7 +77,7 @@ img {
   margin: 12px auto;
 }
 
-code {
+code:not(.language-) {
   margin: 0 1px;
   padding: .2em .4em;
   border: 1px solid #eee;
@@ -87,20 +87,12 @@ code {
   color: #777;
 }
 
-// prism code css
 code[class*="language-"] {
   margin: 0;
   padding: 0;
   border: 0;
   background-color: transparent;
   border-radius: 0;
-}
-
-pre {
-  padding: 16px;
-  margin-top: 16px;
-  margin-bottom: 16px;
-  background-color: #12263f;
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   text-align: left;
   white-space: pre;
@@ -111,7 +103,14 @@ pre {
   font-size: 13px;
   tab-size: 2;
   hyphens: none;
-  color: #ccc;
+  color: #eee;
+}
+
+pre {
+  padding: 16px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  background-color: #12263f;
 }
 
 :not(pre)>code[class*="language-"] {

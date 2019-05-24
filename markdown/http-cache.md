@@ -1,3 +1,9 @@
+<!--
+date: 2013-10-12
+title: http 缓存
+description: 关于 http，我相信大家都耳熟能详，但我今天要讲的是关于 http 缓存的东西，所以我就不扯太多 HTTP 的概念了。
+-->
+
 ## http 缓存
 
 关于 http，我相信大家都耳熟能详，但我今天要讲的是关于 http 缓存的东西，所以我就不扯太多 HTTP 的概念了。
@@ -45,24 +51,25 @@
 
 #### 通过 html 的 meta 标签设置 Expires 和 Cache-Control
 
-    <meta http-equiv="Cache-Control" content="max-age=2592000" />
-    <meta http-equiv="Expires" content="Mon, 11 Nov 2013 03:21:01 GMT" />
+```html
+<meta http-equiv="Cache-Control" content="max-age=2592000" />
+<meta http-equiv="Expires" content="Mon, 11 Nov 2013 03:21:01 GMT" />
+```
 
 #### 通过 mod_expires 模块设置 Expires
 
-    <IfModule mod_expires.c>
-    	ExpiresActive on
-    	ExpiresDefault "access plus 30 days"
-    	ExpiresByType css/html "access plus 30 days"
-    	ExpiresByType css/css  "access plus 30 days"
-    	ExpiresByType images/gif "access plus 30 days"
-    	ExpiresByType images/png "access plus 30 days"
-    	ExpiresByType images/jpeg "access plus 30 days"
-    	ExpiresByType images/ico "access plus 30 days"
-    </IfModule>
+```html
+<IfModule mod_expires.c>
+  ExpiresActive on ExpiresDefault "access plus 30 days" ExpiresByType css/html "access plus 30 days"
+  ExpiresByType css/css "access plus 30 days" ExpiresByType images/gif "access plus 30 days"
+  ExpiresByType images/png "access plus 30 days" ExpiresByType images/jpeg "access plus 30 days"
+  ExpiresByType images/ico "access plus 30 days"
+</IfModule>
+```
 
 #### 通过 mod_headers 模块来设置 Expires
 
+```html
     <FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)$">
     	Header set Cache-Control “max-age=604800, public”
     </FilesMatch>
@@ -72,6 +79,7 @@
     <FilesMatch "\.(html|htm|php)$">
     	Header set Cache-Control “max-age=3600, must-revalidate”
     </FilesMatch>
+```
 
 值得注意的是：上面两种配置，我都是使用 Apache 来设置的，前提一定要配置 Apache 配置环境支持那两个模块；
 

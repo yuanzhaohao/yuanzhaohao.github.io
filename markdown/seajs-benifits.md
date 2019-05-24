@@ -1,3 +1,9 @@
+<!--
+date: 2013-10-03
+title: seajs-前端模块化开发的好处
+description: 这篇文章是出自淘宝著名工程师、seajs 的作者**玉伯**，整篇文章很系统地介绍了前端模块化的价值（虽然有不少地方也是借鉴别人写得文章，不过整理得更加系统）。我在想，当自己写的文章对别人有所帮助的时候，自己心里会是一种什么感觉呢？我相信应该会有一种很幸福的感觉吧，就像娜姐所说的“享受正在做的事情”，工程师真正的魅力和价值大概就在于此吧。
+-->
+
 ## seajs 前端模块化开发的好处
 
 > 这篇文章是出自淘宝著名工程师、seajs 的作者**玉伯**，整篇文章很系统地介绍了前端模块化的价值（虽然有不少地方也是借鉴别人写得文章，不过整理得更加系统）。我在想，当自己写的文章对别人有所帮助的时候，自己心里会是一种什么感觉呢？我相信应该会有一种很幸福的感觉吧，就像娜姐所说的“享受正在做的事情”，工程师真正的魅力和价值大概就在于此吧。
@@ -10,13 +16,15 @@
 
 我们从一个简单的习惯出发。我做项目时，常常会将一些通用的、底层的功能抽象出来，独立成一个个函数，比如
 
-    function each(arr) {
-      // 实现代码
-    }
+```js
+function each(arr) {
+  // 实现代码
+}
 
-    function log(str) {
-      // 实现代码
-    }
+function log(str) {
+  // 实现代码
+}
+```
 
 并像模像样地把这些函数统一放在 util.js 里。需要用到时，引入该文件就行。这一切工作得很好，同事也很感激我提供了这么便利的工具包。
 
@@ -28,44 +36,52 @@
 
 抱怨越来越多。团队经过一番激烈的讨论，决定参照 Java 的方式，引入命名空间来解决。于是 util.js 里的代码变成了
 
-    var org = {};
-    org.CoolSite = {};
-    org.CoolSite.Utils = {};
+```js
+var org = {};
+org.CoolSite = {};
+org.CoolSite.Utils = {};
 
-    org.CoolSite.Utils.each = function (arr) {
-      // 实现代码
-    };
+org.CoolSite.Utils.each = function(arr) {
+  // 实现代码
+};
 
-    org.CoolSite.Utils.log = function (str) {
-      // 实现代码
-    };
+org.CoolSite.Utils.log = function(str) {
+  // 实现代码
+};
+```
 
 不要认为上面的代码是为了写这篇文章而故意捏造的。将命名空间的概念在前端中发扬光大，首推 Yahoo! 的 YUI2 项目。下面是一段真实代码，来自 Yahoo! 的一个开源项目。
 
-    if (org.cometd.Utils.isString(response)) {
-      return org.cometd.JSON.fromJSON(response);
-    }
-    if (org.cometd.Utils.isArray(response)) {
-      return response;
-    }
+```js
+if (org.cometd.Utils.isString(response)) {
+  return org.cometd.JSON.fromJSON(response);
+}
+if (org.cometd.Utils.isArray(response)) {
+  return response;
+}
+```
 
 通过命名空间，的确能极大缓解冲突。但每每看到上面的代码，都忍不住充满同情。为了调用一个简单的方法，需要记住如此长的命名空间，这增加了记忆负担，同时剥夺了不少编码的乐趣。
 
 作为前端业界的标杆，YUI 团队下定决心解决这一问题。在 YUI3 项目中，引入了一种新的命名空间机制。
 
-    YUI().use('node', function (Y) {
-      // Node 模块已加载好
-      // 下面可以通过 Y 来调用
-      var foo = Y.one('#foo');
-    });
+```js
+YUI().use('node', function(Y) {
+  // Node 模块已加载好
+  // 下面可以通过 Y 来调用
+  var foo = Y.one('#foo');
+});
+```
 
 YUI3 通过沙箱机制，很好的解决了命名空间过长的问题。然而，也带来了新问题。
 
-    YUI().use('a', 'b', function (Y) {
-      Y.foo();
-      // foo 方法究竟是模块 a 还是 b 提供的？
-      // 如果模块 a 和 b 都提供 foo 方法，如何避免冲突？
-    });
+```js
+YUI().use('a', 'b', function(Y) {
+  Y.foo();
+  // foo 方法究竟是模块 a 还是 b 提供的？
+  // 如果模块 a 和 b 都提供 foo 方法，如何避免冲突？
+});
+```
 
 看似简单的命名冲突，实际解决起来并不简单。如何更优雅地解决？我们按下暂且不表，先来看另一个常见问题。
 
@@ -75,18 +91,26 @@ YUI3 通过沙箱机制，很好的解决了命名空间过长的问题。然而
 
 其中有一个最被大家喜欢的组件是 dialog.js，使用方式很简单。
 
-    <script src="util.js"></script>
-    <script src="dialog.js"></script>
-    <script>
-      org.CoolSite.Dialog.init({ /* 传入配置 */ });
-    </script>
+```html
+<script src="util.js"></script>
+<script src="dialog.js"></script>
+<script>
+  org.CoolSite.Dialog.init({
+    /* 传入配置 */
+  });
+</script>
+```
 
 可是无论我怎么写文档，以及多么郑重地发邮件宣告，时不时总会有同事来询问为什么 dialog.js 有问题。通过一番排查，发现导致错误的原因经常是
 
-    <script src="dialog.js"></script>
-    <script>
-      org.CoolSite.Dialog.init({ /* 传入配置 */ });
-    </script>
+```html
+<script src="dialog.js"></script>
+<script>
+  org.CoolSite.Dialog.init({
+    /* 传入配置 */
+  });
+</script>
+```
 
 在 dialog.js 前没有引入 util.js，因此 dialog.js 无法正常工作。同样不要以为我上面的故事是虚构的，在我待过的公司里，至今依旧有类似的脚本报错，特别是在各种快速制作的营销页面中。
 
@@ -102,11 +126,18 @@ YUI3 通过沙箱机制，很好的解决了命名空间过长的问题。然而
 
 文件的依赖，目前在绝大部分类库框架里，比如国外的 YUI3 框架、国内的 KISSY 等类库，目前是通过配置的方式来解决。
 
-    YUI.add('my-module', function (Y) {
-      // ...
-    }, '0.0.1', {
-        requires: ['node', 'event']
-    });
+```js
+YUI.add(
+  'my-module',
+  function(Y) {
+    // ...
+  },
+  '0.0.1',
+  {
+    requires: ['node', 'event'],
+  },
+);
+```
 
 上面的代码，通过 requires 等方式来指定当前模块的依赖。这很大程度上可以解决依赖问题，但不够优雅。当模块很多，依赖很复杂时，烦琐的配置会带来不少隐患。
 
@@ -118,34 +149,44 @@ Sea.js 是一个成熟的开源项目，核心目标是给前端开发提供简�
 
 使用 Sea.js，在书写文件时，需要遵守 CMD （Common Module Definition）模块定义规范。一个文件就是一个模块。前面例子中的 util.js 变成
 
-    define(function(require, exports) {
-      exports.each = function (arr) {
-        // 实现代码
-      };
+```js
+define(function(require, exports) {
+  exports.each = function(arr) {
+    // 实现代码
+  };
 
-      exports.log = function (str) {
-        // 实现代码
-      };
-    });
+  exports.log = function(str) {
+    // 实现代码
+  };
+});
+```
 
 通过 exports 就可以向外提供接口。这样，dialog.js 的代码变成
 
-    define(function(require, exports) {
-      var util = require('./util.js');
+```js
+define(function(require, exports) {
+  var util = require('./util.js');
 
-      exports.init = function() {
-        // 实现代码
-      };
-    });
+  exports.init = function() {
+    // 实现代码
+  };
+});
+```
 
 关键部分到了！我们通过 require('./util.js') 就可以拿到 util.js 中通过 exports 暴露的接口。这里的 require 可以认为是 Sea.js 给 JavaScript 语言增加的一个 语法关键字，通过 require 可以获取其他模块提供的接口。
 
 这其实一点也不神奇。作为前端工程师，对 CSS 代码一定也不陌生。
 
-    @import url("base.css");
+```css
+@import url('base.css');
 
-    #id { ... }
-    .class { ... }
+#id {
+  ...;
+}
+.class {
+  ...;
+}
+```
 
 Sea.js 增加的 require 语法关键字，就如 CSS 文件中的 `@import` 一样，给我们的源码赋予了依赖引入功能。
 
@@ -153,12 +194,14 @@ Sea.js 增加的 require 语法关键字，就如 CSS 文件中的 `@import` 一
 
 这样，在页面中使用 dialog.js 将变得非常简单。
 
-    <script src="sea.js"></script>
-    <script>
-    seajs.use('dialog', function(Dialog) {
-      Dialog.init(/* 传入配置 */);
-    });
-    </script>
+```html
+<script src="sea.js"></script>
+<script>
+  seajs.use('dialog', function(Dialog) {
+    Dialog.init(/* 传入配置 */);
+  });
+</script>
+```
 
 首先要在页面中引入 sea.js 文件，这一般通过页头全局把控，也方便更新维护。想在页面中使用某个组件时，只要通过 seajs.use 方法调用。
 
