@@ -77,6 +77,16 @@ img {
   margin: 12px auto;
 }
 
+code {
+  margin: 0 1px;
+  padding: .2em .4em;
+  border: 1px solid #eee;
+  background-color: #f2f4f5;
+  border-radius: 3px;
+  font-size: .9em;
+  color: #777;
+}
+
 // prism code css
 code[class*="language-"] {
   margin: 0;
@@ -85,8 +95,12 @@ code[class*="language-"] {
   background-color: transparent;
   border-radius: 0;
 }
-code[class*="language-"],
-pre[class*="language-"] {
+
+pre {
+  padding: 16px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  background-color: #12263f;
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   text-align: left;
   white-space: pre;
@@ -94,15 +108,10 @@ pre[class*="language-"] {
   word-break: normal;
   word-wrap: normal;
   line-height: 1.5;
+  font-size: 13px;
   tab-size: 2;
   hyphens: none;
   color: #ccc;
-}
-
-pre {
-  padding: 16px 24px;
-  margin-bottom: 0;
-  background-color: #12263f;
 }
 
 :not(pre)>code[class*="language-"] {

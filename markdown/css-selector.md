@@ -1,3 +1,9 @@
+<!--
+date: 2013-08-23
+title: css选择器优化
+description: 首先我们需要清楚，浏览器是如何读取选择器，以识别样式，并将相应的样式附于对应的 HTML 元素，达到美化页面的效果。[Chris Coyier](http://css-tricks.com/)曾在《[Efficiently Rendering CSS](http://css-tricks.com/efficiently-rendering-css/)》一文中说过“浏览器读取你的选择器，遵循的原则是从选择器的右边到左边读取。换句话说，浏览器读取选择器的顺序是由右到左进行”。
+-->
+
 ## css 选择器优化
 
 #### 浏览器如何识别你的选择器
