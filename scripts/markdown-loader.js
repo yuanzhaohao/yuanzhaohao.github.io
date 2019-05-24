@@ -16,7 +16,5 @@ module.exports = function(source, options) {
   const sourcePath = path.dirname(this.resourcePath);
   const basename = path.basename(this.resourcePath, '.md');
 
-  console.log(basename);
-
   return `module.exports = {` + `\n  markdown: ${JSON.stringify(md.render(source))},` + `};`;
 };
