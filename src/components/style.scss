@@ -108,6 +108,10 @@
     display: flex;
     z-index: 11;
   }
+
+  .detail-container {
+    padding: 24px !important;
+  }
 }
 
 .page-loading {
@@ -177,6 +181,7 @@ pre {
   margin-top: 16px;
   margin-bottom: 16px;
   background-color: #12263f;
+  overflow-x: scroll;
 }
 
 :not(pre)>code[class*="language-"] {
