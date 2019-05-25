@@ -11,6 +11,7 @@
     "native",
     "touch"
   ],
+  "license": "ISC",
   "author": "yuanzhaohao",
   "engines": {
     "node": ">= 0.10.0"

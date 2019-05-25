@@ -120,11 +120,11 @@
   }
 
   &-overlay {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     right: 250px;
-    bottom: 0;
+    height: 100vh;
     z-index: 1;
     // background-color: rgba(0, 0, 0, 0.25);
   }
