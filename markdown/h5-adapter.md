@@ -13,18 +13,17 @@ description: 在移动端的时代，终端适配一直以来都是一个头痛�
 话不多说，先上图
 
 <div style="width: 100%;">
-	<img src="http://km.oa.com/files/photos/pictures/201711/1510664226_87_w1080_h1920.jpeg" style="float: left; width: 23%; margin-right: 7px;">
-	<img src="http://km.oa.com/files/photos/pictures/201711/1510664107_12_w563_h1000.png" style="float: left; width: 23%; margin-right: 7px;">
-	<img src="http://km.oa.com/files/photos/pictures/201711/1510664107_6_w640_h1136.jpeg" style="float: left; width: 23%; margin-right: 7px;">
-	<img src="http://km.oa.com/files/photos/pictures/201711/1510664225_13_w1080_h1440.jpeg" style="float: left; width: 23%;">
+	<img src="/static/h5-adapter-iphone7p.png" style="float: left; width: 30%; margin-right: 7px;">
+	<img src="/static/h5-adapter-iphone7.jpeg" style="float: left; width: 30%; margin-right: 7px;">
+	<img src="/static/h5-adapter-android.jpeg" style="float: left; width: 30%; margin-right: 7px;">
 	<p style="clear: both;"></p>
 </div>
 
-（分别是 iPhone7p、iPhone7、iPhone5 和两台低端 Android 手机）
+（分别是 iPhone7p、iPhone7 和两台低端 Android 手机）
 
 ### 解决思路
 
-<img src="http://km.oa.com/files/photos/captures/201712/1512715435_52_w1022_h882.png" style="display: block; width: 70%; margin: 0 auto">
+![h5-adapter](/static/h5-adapter-theory.png)
 
 大体的思路如下：
 
