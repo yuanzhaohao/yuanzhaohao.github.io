@@ -12,10 +12,17 @@
     width: 100%;
     padding: 16px 24px;
     z-index: 1;
-    // background-color: #12263f;
-    color: #f7f7f7;
-    font-size: 18px;
-    // border-bottom: 1px solid #1e3a5c;
+
+    > a {
+      text-decoration: none;
+      color: #f7f7f7;
+      font-size: 18px;
+
+      &:hover {
+        text-decoration: none;
+        color: #f7f7f7;
+      }
+    }
   }
 
   &-logo {
@@ -25,6 +32,11 @@
     background-image: url('/static/photo.jpg');
     border-radius: 50%;
     background-size: contain;
+  }
+
+  &-list {
+    display: flex;
+    flex-direction: column;
   }
 
   &-divider {
@@ -83,5 +95,37 @@
       margin-right: 10px;
       font-size: 16px;
     }
+  }
+
+  &-toggle {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    color: #f7f7f7;
+
+    &-icon {
+      width: 24px;
+      height: 24px;
+      font-size: 24px;
+    }
+
+    &-active {
+      color: #2c7be5;
+    }
+  }
+
+  &-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 250px;
+    bottom: 0;
+    z-index: 1;
+    // background-color: rgba(0, 0, 0, 0.25);
   }
 }

@@ -21,7 +21,7 @@ export function formatTime(timestamp: number, format: string) {
   return format;
 }
 
-export const sideBarRoutes = [
+export const sidebarRoutes = [
   {
     pathname: '/',
     title: 'Home',
@@ -34,7 +34,7 @@ export const sideBarRoutes = [
   },
 ];
 
-export const sideBarContact = [
+export const sidebarContact = [
   {
     title: 'Github',
     icon: 'github',
