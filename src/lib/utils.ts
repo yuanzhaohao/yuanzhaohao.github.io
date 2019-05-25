@@ -21,73 +21,33 @@ export function formatTime(timestamp: number, format: string) {
   return format;
 }
 
-export function toThousands(num: number) {
-  return (num || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
-}
+export const sideBarRoutes = [
+  {
+    pathname: '/',
+    title: 'Home',
+    icon: 'home',
+  },
+  {
+    pathname: '/about',
+    title: 'About me',
+    icon: 'user',
+  },
+];
 
-const now =
-  Date.now ||
-  function n() {
-    return new Date().getTime();
-  };
-
-function later(fn: any, ms: number, context: ObjectConstructor, data: IArguments) {
-  const r = setTimeout(function a() {
-    fn.apply(context, data);
-  }, ms);
-
-  return {
-    id: r,
-    cancel() {
-      clearTimeout(r);
-    },
-  };
-}
-
-/**
- * Function throttle
- * Run the Funtion firstly
- * Run the Function in the time interval.
- */
-export function throttle(fn: any, ms: number, context: any) {
-  let lastStart = 0;
-  let lastEnd = 0;
-  let timer: any = 0;
-  ms = ms || 150;
-  function run() {
-    if (timer) {
-      timer.cancel();
-      timer = 0;
-    }
-    lastStart = now();
-    fn.apply(context, arguments);
-    lastEnd = now();
-  }
-  return function b() {
-    if (
-      !lastStart ||
-      (lastEnd >= lastStart && now() - lastEnd > ms) ||
-      (lastEnd < lastStart && now() - lastStart > ms * 8)
-    ) {
-      run.apply(context, arguments);
-    } else {
-      if (timer) {
-        timer.cancel();
-      }
-      timer = later(run, ms, context, arguments);
-    }
-  };
-}
-
-export function obj2url(obj: any) {
-  if (obj && obj instanceof Object) {
-    const ary: any[] = [];
-    Object.keys(obj).forEach(key => {
-      if (obj[key]) {
-        ary.push(`${key}=${obj[key]}`);
-      }
-    });
-    return ary.join('&');
-  }
-  return '';
-}
+export const sideBarContact = [
+  {
+    title: 'Github',
+    icon: 'github',
+    link: 'https://github.com/yuanzhaohao',
+  },
+  {
+    title: 'Linkedin',
+    icon: 'linkedin',
+    link: 'https://www.linkedin.com/in/zhaohao-yuan-6595967b/',
+  },
+  {
+    title: '知乎',
+    icon: 'book',
+    link: 'https://www.zhihu.com/people/yuan-jing-65/activities',
+  },
+];
