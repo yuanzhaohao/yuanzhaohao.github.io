@@ -39,7 +39,7 @@ new Promise(function(resolve, reject) {
     .sort((a, b) => {
       const d1 = +new Date(a.date);
       const d2 = +new Date(b.date);
-      return d1 - d2;
+      return d2 - d1;
     });
 
   fs.writeFile(path.join(srcPath, './data.json'), JSON.stringify(data, null, 2), function(err) {
