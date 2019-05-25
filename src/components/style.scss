@@ -112,6 +112,10 @@
   .detail-container {
     padding: 24px !important;
   }
+
+  .list-item-title {
+    font-size: 24px !important;
+  }
 }
 
 .page-loading {
@@ -139,6 +143,11 @@ h3, h4, h5 {
 ul {
   margin-top: 16px;
   list-style-position: inside;
+  padding-inline-start: 24px;
+
+  ul {
+    margin-top: 0;
+  }
 }
 
 img {

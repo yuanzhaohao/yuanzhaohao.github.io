@@ -64,6 +64,7 @@
     "js-yaml": "^3.13.1",
     "lint-staged": "^8.1.6",
     "markdown-it": "^8.4.2",
+    "marked": "^0.6.2",
     "node-sass": "^4.12.0",
     "portfinder": "^1.0.20",
     "postcss-loader": "^3.0.0",

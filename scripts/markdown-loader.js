@@ -2,7 +2,7 @@
 
 const fs = require('fs-extra');
 const path = require('path');
-const loaderUtils = require('loader-utils');
+// const marked = require('marked');
 const md = require('markdown-it')({
   html: true,
 });
@@ -15,6 +15,9 @@ module.exports = function(source, options) {
 
   const sourcePath = path.dirname(this.resourcePath);
   const basename = path.basename(this.resourcePath, '.md');
+
+  // 处理页头的meta信息
+  source = source.replace(/<!--(.*)\s?([^]+?)-->/gi, '');
 
   return `module.exports = {` + `\n  markdown: ${JSON.stringify(md.render(source))},` + `};`;
 };
