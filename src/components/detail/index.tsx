@@ -12,6 +12,7 @@ type DetailState = {
   dataSource?: {
     markdown: string;
   } | null;
+  isLoading: boolean;
 };
 
 class Detail extends React.PureComponent<DetailProps, DetailState> {
@@ -19,43 +20,52 @@ class Detail extends React.PureComponent<DetailProps, DetailState> {
     super(props);
     this.state = {
       dataSource: null,
+      isLoading: false,
     };
   }
-  public async componentDidMount() {
+  public componentDidUpdate(prevProps: DetailProps) {
+    const { params } = this.props.match;
+    const { params: prevParams } = prevProps.match;
+
+    if (params.name && prevParams.name !== params.name) {
+      this.loadData(params.name);
+    }
+  }
+
+  public componentDidMount() {
     const { params } = this.props.match;
     if (params && params.name) {
-      const dataSource = await import(`../../../markdown/${params.name}.md`);
-      console.log(params.name, dataSource);
-      this.setState({
-        dataSource,
-      });
+      this.loadData(params.name);
     }
   }
 
   public render() {
-    const { dataSource } = this.state;
+    const { dataSource, isLoading } = this.state;
 
-    return (
-      <Grid fluid>
-        <Row center="xs">
-          <Col xs={12} md={10} lg={8}>
-            {dataSource && dataSource.markdown ? (
-              <div
-                className="detail-container"
-                dangerouslySetInnerHTML={{
-                  __html: dataSource.markdown,
-                }}
-              />
-            ) : (
-              <div className="page-loading">
-                <Spin text="Loading..." spinning={true} />
-              </div>
-            )}
-          </Col>
-        </Row>
-      </Grid>
+    return !isLoading && dataSource && dataSource.markdown ? (
+      <div
+        className="detail-container"
+        dangerouslySetInnerHTML={{
+          __html: dataSource.markdown,
+        }}
+      />
+    ) : (
+      <div className="page-loading">
+        <Spin text="Loading..." spinning={true} />
+      </div>
     );
   }
+
+  private loadData = async (name: string) => {
+    this.setState({
+      isLoading: true,
+    });
+    const dataSource = await import(`../../../markdown/${name}.md`);
+    this.setState({
+      dataSource,
+      isLoading: false,
+    });
+  };
 }
 
 export default Detail;
