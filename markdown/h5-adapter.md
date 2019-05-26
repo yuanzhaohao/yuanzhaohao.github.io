@@ -13,9 +13,9 @@ description: 在移动端的时代，终端适配一直以来都是一个头痛�
 话不多说，先上图
 
 <div style="width: 100%;">
-	<img src="/static/h5-adapter-iphone7p.png" style="float: left; width: 30%; margin-right: 7px;">
-	<img src="/static/h5-adapter-iphone7.jpeg" style="float: left; width: 30%; margin-right: 7px;">
-	<img src="/static/h5-adapter-android.jpeg" style="float: left; width: 30%; margin-right: 7px;">
+	<img src="/static/h5-adapter-iphone7p.jpg" style="float: left; width: 30%; margin-right: 7px;">
+	<img src="/static/h5-adapter-iphone7.jpg" style="float: left; width: 30%; margin-right: 7px;">
+	<img src="/static/h5-adapter-android.jpg" style="float: left; width: 30%; margin-right: 7px;">
 	<p style="clear: both;"></p>
 </div>
 
