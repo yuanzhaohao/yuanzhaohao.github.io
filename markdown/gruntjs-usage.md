@@ -64,7 +64,7 @@ module.exports = function(grunt) {
 
 就会出现以下的结果
 
-![gruntjs-usage](/static/gruntjs-usage-1.png)
+![gruntjs-usage](/static/img/gruntjs-usage-1.png)
 
 #### gruntjs 进阶篇
 
@@ -106,7 +106,7 @@ module.exports = function(grunt) {
 
 新建以下一些文件
 
-![gruntjs-usage](/static/gruntjs-usage-2.png)
+![gruntjs-usage](/static/img/gruntjs-usage-2.png)
 
 新建 Gruntfile.js 文件，在 Gruntfile.js 文件输入以下代码
 

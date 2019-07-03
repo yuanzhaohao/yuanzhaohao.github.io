@@ -6,7 +6,7 @@ description: 照片上的这个人叫安金磊。我第一次知道他的故事�
 
 ## 正念是什么：专注
 
-![mindfulness-focus](/static/mindfulness-focus.jpg)
+![mindfulness-focus](/static/img/mindfulness-focus.jpg)
 
 照片上的这个人叫安金磊。我第一次知道他的故事，是在很久以前，看一个央视节目的报道。后来，我又在很多报纸和杂志上听到过他的故事。从某种意义上，他并没有做特别了不起的事情。但他的故事中蕴含着一种力量，每次想起他的故事，我就会被深深打动。
 

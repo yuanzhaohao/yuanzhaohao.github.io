@@ -8,7 +8,7 @@ import dynamic from '../lib/dynamic';
 
 const List = dynamic(() => import('./list'));
 const Detail = dynamic(() => import('./detail'));
-const { Content, Footer } = Layout;
+const { Footer } = Layout;
 const { Row, Col } = Grid;
 
 import './style.scss';
