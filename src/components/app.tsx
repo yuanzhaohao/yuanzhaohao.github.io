@@ -1,3 +1,5 @@
+import '@babel/runtime/regenerator';
+
 import * as React from 'react';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { Layout, Grid } from 'dashkit-ui';
