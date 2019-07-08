@@ -73,15 +73,68 @@ var longestSubstring = function(s) {
 
 console.log(longestSubstring('abcabcbb'));
 function add(a) {
-  function s(b) {
-    a = a + b;
-    return s;
+  function fn(b) {
+    a += b;
+    fn.val = a;
+    return fn;
   }
-  s.toString = function() {
-    return a;
-  };
-
-  return s;
+  fn.val = a;
+  return fn;
 }
 
-console.log(add(1)(2));
+console.log(add(1).val);
+console.log(add(1)(2).val);
+console.log(add(1)(2)(3).val);
+
+function fn(n) {
+  let f = m => fn(m + n);
+  f.val = n;
+  return f;
+}
+
+console.log(fn(1).val);
+console.log(fn(1)(2).val);
+console.log(fn(1)(2)(3).val);
+
+// const a1 = add(1);
+// const a2 = add(1)(2);
+// const a3 = add(1)(2)(3);
+
+// console.log(a1.val);
+// console.log(a2.val);
+// console.log(a3.val);
+
+// function add(a) {
+//   function mid(f,b){
+//   	function r(c){
+//   		return mid(r,c)
+//   	}
+//   	r.valueOf = function(){
+//   		return f.valueOf() + b
+//   	}
+//   	return r
+//   }
+//   function start(b){
+//     return mid(start,b)
+//   }
+//   start.valueOf = function() {return a}
+//   return start
+// }
+
+// function add(x) {
+//   function helper(y, x) {
+//     var sum = y + x;
+//     var f = helper.bind(null, sum);
+//     f.toString = function () {
+//       return '' + sum;
+//     };
+//     f.valueOf = function () {
+//       return sum;
+//     };
+//     return f;
+//   }
+//   return helper(x, 0);
+// }
+
+// console.log(+add(1));
+// console.log(add(1)(2)(3));

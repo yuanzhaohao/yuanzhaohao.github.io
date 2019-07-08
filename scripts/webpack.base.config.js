@@ -6,20 +6,10 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const utils = require('./utils');
 const config = require('./config');
 const srcPath = utils.resolve(config.srcPath);
+const tsImportPluginFactory = require('ts-import-plugin');
 const entry = utils.getEntry(path.join(srcPath, './entry'));
 const vendors =
   config.optimizeCommon && typeof config.optimizeCommon === 'object' ? config.optimizeCommon : {};
-
-const createLintingRule = () => ({
-  test: /\.(js|ts|tsx)$/,
-  loader: 'eslint-loader',
-  enforce: 'pre',
-  include: [srcPath],
-  options: {
-    formatter: require('eslint-friendly-formatter'),
-    emitWarning: true,
-  },
-});
 
 const createHappypackPlugin = () => {
   const os = require('os');
@@ -36,19 +26,34 @@ const createHappypackPlugin = () => {
   };
 
   return [
-    createHappypack('js', [
-      {
-        path: 'babel-loader',
-        query: {
-          cacheDirectory: '.happypack_cache',
-        },
-      },
-    ]),
+    // createHappypack('js', [
+    //   {
+    //     path: 'babel-loader',
+    //     query: {
+    //       cacheDirectory: '.happypack_cache',
+    //     },
+    //   },
+    // ]),
     createHappypack('ts', [
       {
         path: 'ts-loader',
         query: {
           happyPackMode: true,
+        },
+        options: {
+          transpileOnly: true,
+          getCustomTransformers: () => ({
+            before: [
+              tsImportPluginFactory({
+                libraryName: 'dashkit-ui',
+                libraryDirectory: 'es',
+                style: stylePath => {
+                  console.log(stylePath);
+                  return stylePath;
+                },
+              }),
+            ],
+          }),
         },
       },
     ]),
@@ -102,16 +107,25 @@ module.exports = {
   plugins: [...createHappypackPlugin(), ...createHtmlPlugin()],
   module: {
     rules: [
-      ...(config.useEslint ? [createLintingRule()] : []),
       {
-        test: /\.js$/,
-        loader: 'happypack/loader?id=js',
+        test: /\.(ts|tsx|js|jsx)$/,
+        // loader: 'happypack/loader?id=ts',
+        loader: 'ts-loader',
         exclude: /node_modules/,
-      },
-      {
-        test: /\.(ts|tsx)$/,
-        loader: 'happypack/loader?id=ts',
-        exclude: /node_modules/,
+        options: {
+          transpileOnly: true,
+          getCustomTransformers: () => ({
+            before: [
+              tsImportPluginFactory({
+                libraryName: 'dashkit-ui',
+                libraryDirectory: 'es',
+                style: stylePath => {
+                  return `${stylePath}/style.scss`;
+                },
+              }),
+            ],
+          }),
+        },
       },
       {
         test: /\.scss$/,

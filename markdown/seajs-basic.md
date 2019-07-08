@@ -104,7 +104,7 @@ math.add(2, 3);
           'highcharts-more': 'highcharts/3.0.5/highcharts-more.js',
         },
       });
-      seajs.use('./static//js/highcharts');
+      seajs.use('./static/img//js/highcharts');
     </script>
   </body>
 </html>
@@ -198,4 +198,4 @@ define(function(require, exports, module) {
 
 用浏览器打开 highcharts.html，会出现下面的页面！
 
-![seajs-highcharts](/static/seajs-highcharts.png)
+![seajs-highcharts](/static/img/seajs-highcharts.png)

@@ -384,7 +384,7 @@ define(function(require, exports) {
 define(function(require, exports, module) {
   exports.a = 'call highcharts';
 });
-seajs.use('./static//js/highcharts', function(highcharts) {
+seajs.use('./js/highcharts', function(highcharts) {
   console.log(highcharts.a);
 });
 

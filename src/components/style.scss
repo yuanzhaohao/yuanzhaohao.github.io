@@ -157,7 +157,7 @@ img {
   margin: 12px auto;
 }
 
-code:not(language-) {
+code {
   margin: 0 1px;
   padding: .2em .4em;
   border: 1px solid #eee;
@@ -173,6 +173,9 @@ code[class*="language-"] {
   border: 0;
   background-color: transparent;
   border-radius: 0;
+}
+code[class*="language-"],
+pre[class*="language-"] {
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   text-align: left;
   white-space: pre;
@@ -180,18 +183,21 @@ code[class*="language-"] {
   word-break: normal;
   word-wrap: normal;
   line-height: 1.5;
-  font-size: 13px;
   tab-size: 2;
   hyphens: none;
-  color: #eee;
+  color: #ccc;
 }
 
-pre {
-  padding: 16px;
-  margin-top: 16px;
-  margin-bottom: 16px;
-  background-color: #12263f;
+pre[class*="language-"] {
+  padding: 16px 24px;
+  margin-bottom: 0;
   overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+:not(pre)>code[class*="language-"],
+pre[class*="language-"] {
+  background-color: #12263f;
 }
 
 :not(pre)>code[class*="language-"] {
