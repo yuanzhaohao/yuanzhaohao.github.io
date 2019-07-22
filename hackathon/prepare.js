@@ -48,6 +48,30 @@ console.log(isValid('()[]{}'));
 console.log(isValid('([)]'));
 console.log(isValid('{[]}'));
 
+var longestSubstring = function(s) {
+  if (s.lengh == 0) {
+    return '';
+  }
+  let subStr = s.charAt(0);
+  let len = 1;
+  let strMap = [subStr];
+  for (let i = 0; i < s.length; i++) {
+    const index = subStr.indexOf(s[i]);
+    if (index !== -1) {
+      subStr = subStr.substr(index + 1) + s[i];
+    } else {
+      subStr = subStr + s[i];
+    }
+    if (subStr.length > len) {
+      len = subStr.length;
+      strMap.push(subStr);
+    }
+  }
+  console.log(strMap);
+  return len;
+};
+
+console.log(longestSubstring('abcabcbb'));
 function add(a) {
   function fn(b) {
     a += b;
