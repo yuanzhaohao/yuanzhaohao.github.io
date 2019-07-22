@@ -114,3 +114,30 @@ console.log(fn(1)(2)(3).val);
 
 // console.log(+add(1));
 // console.log(add(1)(2)(3));
+
+/**
+ * bind，call，apply三个函数的认识，自己实现一下bind方法。
+ */
+
+Function.prototype.bindFunction = function(context) {
+  const self = this;
+  const args = Array.prototype.slice.call(arguments, 1);
+
+  return function() {
+    const bindArgs = Array.prototype.slice.call(arguments);
+    return self.apply(context, args.concat(bindArgs));
+  };
+};
+
+var foo = {
+  value: 1,
+};
+
+function bar(name, age) {
+  console.log(this.value);
+  console.log(name);
+  console.log(age);
+}
+
+var bindFoo = bar.bindFunction(foo, 'display');
+bindFoo('18');
