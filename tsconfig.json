@@ -11,6 +11,7 @@
     "strictFunctionTypes": false,
     "sourceMap": false,
     "removeComments": true,
+    "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "paths": {
       "dashkit-ui": ["src/"]

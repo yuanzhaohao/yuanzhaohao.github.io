@@ -6,9 +6,6 @@ import { sidebarRoutes, sidebarContact } from '../../lib/utils';
 import './sidebar.scss';
 
 type Props = RouteComponentProps;
-type State = {
-  isShowList: boolean;
-};
 
 const Sidebar = (props: Props) => {
   const [isShowList, setIsShowList] = React.useState(false);
