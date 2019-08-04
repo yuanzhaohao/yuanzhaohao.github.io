@@ -342,3 +342,21 @@ console.log(obj.name);
 var alice = new bar('Alice');
 console.log(obj.name);
 console.log(alice.name);
+
+function throttle(context, fn, ms) {
+  let lastTime = null;
+
+  return function() {
+    let newTime = +new Date();
+    if (newTime - lastTime > ms || !lastTime) {
+      fn.apply(context, arguments);
+      lastTime = newTime;
+    }
+  };
+}
+
+let fnT = () => {
+  console.log('boom');
+};
+
+setInterval(throttle(window, fnT, 1000), 100);
