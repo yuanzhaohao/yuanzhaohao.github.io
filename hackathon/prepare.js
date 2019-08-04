@@ -208,85 +208,137 @@ console.log([1] == [1]);
 
 // Event loop
 //
-async function a1() {
-  console.log('a1 start');
-  await a2();
-  console.log('a1 end');
-}
-async function a2() {
-  console.log('a2');
-}
+function eventLoop() {
+  async function a1() {
+    console.log('a1 start');
+    await a2();
+    console.log('a1 end');
+  }
+  async function a2() {
+    console.log('a2');
+  }
 
-console.log('script start');
+  console.log('script start');
 
-setTimeout(() => {
-  console.log('setTimeout');
-}, 0);
+  setTimeout(() => {
+    console.log('setTimeout');
+  }, 0);
 
-Promise.resolve().then(() => {
-  console.log('promise1');
-});
-
-a1();
-
-let promise2 = new Promise(resolve => {
-  resolve('promise2.then');
-  console.log('promise2');
-});
-
-promise2.then(res => {
-  console.log(res);
   Promise.resolve().then(() => {
-    console.log('promise3');
-  });
-});
-console.log('script end');
-
-// script start
-// a1 start
-// a2
-// promise2
-// script end
-// promise1
-// a1 end
-// promise2.then
-// promise3
-// setTimeout
-
-//
-console.log('script start');
-
-async function async1() {
-  await async2();
-  console.log('async1 end');
-}
-async function async2() {
-  console.log('async2 end');
-}
-async1();
-
-setTimeout(function() {
-  console.log('setTimeout');
-}, 0);
-
-new Promise(resolve => {
-  console.log('Promise');
-  resolve();
-})
-  .then(function() {
     console.log('promise1');
-  })
-  .then(function() {
+  });
+
+  a1();
+
+  let promise2 = new Promise(resolve => {
+    resolve('promise2.then');
     console.log('promise2');
   });
 
-console.log('script end');
+  promise2.then(res => {
+    console.log(res);
+    Promise.resolve().then(() => {
+      console.log('promise3');
+    });
+  });
+  console.log('script end');
 
-// script start
-// async2 end
-// Promise
-// script end
-// async1 end
-// promise1
-// promise2
-// setTimeout
+  // script start
+  // a1 start
+  // a2
+  // promise2
+  // script end
+  // promise1
+  // a1 end
+  // promise2.then
+  // promise3
+  // setTimeout
+}
+
+//
+function eventLoop2() {
+  console.log('script start');
+
+  async function async1() {
+    await async2();
+    console.log('async1 end');
+  }
+  async function async2() {
+    console.log('async2 end');
+  }
+  async1();
+
+  setTimeout(function() {
+    console.log('setTimeout');
+  }, 0);
+
+  new Promise(resolve => {
+    console.log('Promise');
+    resolve();
+  })
+    .then(function() {
+      console.log('promise1');
+    })
+    .then(function() {
+      console.log('promise2');
+    });
+
+  console.log('script end');
+  // script start
+  // async2 end
+  // Promise
+  // script end
+  // async1 end
+  // promise1
+  // promise2
+  // setTimeout
+}
+
+// sleep函数
+//
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function test() {
+  console.log('Hello');
+  await sleep(3000);
+  console.log('world');
+}
+
+test();
+
+// bind的实现
+// 1. 改变原函数的this，绑定上下文，返回原函数的拷贝
+// 2、绑定函数被调用的时候，bing额外的参数能传递到被绑定的函数
+// 3、能使用new关键字创建对象
+//
+Function.prototype.myBind = function(context) {
+  const self = this;
+  const args = Array.prototype.slice.call(arguments, 1);
+  const fn = function() {
+    const bindArgs = Array.prototype.slice.call(arguments);
+    const newContext = this instanceof self ? this : context;
+    return self.apply(newContext, args.concat(bindArgs));
+  };
+  fn.prototype = this.prototype;
+  return fn;
+};
+
+function bFn(name) {
+  this.name = name;
+}
+
+var obj = {};
+
+var bar = bFn.myBind(obj);
+bar('jack');
+console.log(obj.name);
+
+var tar = bFn.myBind(obj, 'rose');
+tar();
+console.log(obj.name);
+
+var alice = new bar('Alice');
+console.log(obj.name);
+console.log(alice.name);
