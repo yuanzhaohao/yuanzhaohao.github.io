@@ -142,7 +142,6 @@ console.log(fn(1)(2)(3).val);
 /**
  * bind，call，apply三个函数的认识，自己实现一下bind方法。
  */
-
 Function.prototype.bindFunction = function(context) {
   const self = this;
   const args = Array.prototype.slice.call(arguments, 1);
@@ -165,3 +164,129 @@ function bar(name, age) {
 
 var bindFoo = bar.bindFunction(foo, 'display');
 bindFoo('18');
+
+// arguments转换数组
+//
+function testArgs(a, b, c) {
+  console.log([...arguments]);
+  console.log(Array.from(arguments));
+}
+testArgs(1, 2, 3);
+
+// 拷贝数组
+//
+const ary = [1, 2];
+console.log(ary.slice());
+console.log([].concat(ary));
+console.log(Array.from(ary));
+console.log([...ary]);
+
+// 清空数组
+//
+ary.splice(0, ary.length);
+console.log(ary);
+
+var ary2 = [1, 3];
+ary2.length = 0;
+console.log(ary2);
+
+var ary3 = [1, 2];
+ary3 = [];
+console.log(ary3);
+
+// 判断数组
+//
+console.log(Object.prototype.toString.call(ary) === '[object Array]');
+console.log(ary instanceof Array);
+console.log(Array.isArray(ary));
+
+// 非严格比较操作符
+//
+console.log([] == false);
+console.log(!![] == true);
+console.log([1] == [1]);
+
+// Event loop
+//
+async function a1() {
+  console.log('a1 start');
+  await a2();
+  console.log('a1 end');
+}
+async function a2() {
+  console.log('a2');
+}
+
+console.log('script start');
+
+setTimeout(() => {
+  console.log('setTimeout');
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log('promise1');
+});
+
+a1();
+
+let promise2 = new Promise(resolve => {
+  resolve('promise2.then');
+  console.log('promise2');
+});
+
+promise2.then(res => {
+  console.log(res);
+  Promise.resolve().then(() => {
+    console.log('promise3');
+  });
+});
+console.log('script end');
+
+// script start
+// a1 start
+// a2
+// promise2
+// script end
+// promise1
+// a1 end
+// promise2.then
+// promise3
+// setTimeout
+
+//
+console.log('script start');
+
+async function async1() {
+  await async2();
+  console.log('async1 end');
+}
+async function async2() {
+  console.log('async2 end');
+}
+async1();
+
+setTimeout(function() {
+  console.log('setTimeout');
+}, 0);
+
+new Promise(resolve => {
+  console.log('Promise');
+  resolve();
+})
+  .then(function() {
+    console.log('promise1');
+  })
+  .then(function() {
+    console.log('promise2');
+  });
+
+console.log('script end');
+
+// script start
+// async2 end
+// Promise
+// script end
+// async1 end
+// promise1
+// promise2
+// setTimeout
