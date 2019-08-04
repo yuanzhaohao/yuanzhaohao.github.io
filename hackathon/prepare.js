@@ -359,4 +359,4 @@ let fnT = () => {
   console.log('boom');
 };
 
-setInterval(throttle(window, fnT, 1000), 100);
+// setInterval(throttle(window, fnT, 1000), 100);
