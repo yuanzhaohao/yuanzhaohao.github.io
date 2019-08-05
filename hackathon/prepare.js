@@ -359,4 +359,16 @@ let fnT = () => {
   console.log('boom');
 };
 
+function debounceSimple(fn, ms, context) {
+  let timer = null;
+
+  return function() {
+    const args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      fn.apply(context, args);
+    }, ms);
+  };
+}
+
 // setInterval(throttle(window, fnT, 1000), 100);
