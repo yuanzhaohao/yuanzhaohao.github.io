@@ -55,7 +55,8 @@ var longestSubstring = function(s) {
   let subStr = s.charAt(0);
   let len = 1;
   let strMap = [subStr];
-  for (let i = 0; i < s.length; i++) {
+  let result = subStr;
+  for (let i = 1; i < s.length; i++) {
     const index = subStr.indexOf(s[i]);
     if (index !== -1) {
       subStr = subStr.substr(index + 1) + s[i];
@@ -65,13 +66,16 @@ var longestSubstring = function(s) {
     if (subStr.length > len) {
       len = subStr.length;
       strMap.push(subStr);
+      result = subStr;
     }
   }
-  console.log(strMap);
-  return len;
+  console.log(strMap, result);
+  return result;
 };
 
+console.log(longestSubstring('abcdbsbc'));
 console.log(longestSubstring('abcabcbb'));
+
 function add(a) {
   function fn(b) {
     a += b;
@@ -371,4 +375,42 @@ function debounceSimple(fn, ms, context) {
   };
 }
 
-// setInterval(throttle(window, fnT, 1000), 100);
+function throttleP(fn, ms = 150, context) {
+  let pending = false;
+
+  return function() {
+    if (!pending) {
+      const self = this;
+      const args = arguments;
+      pending = true;
+      setTimeout(function() {
+        fn.apply(context || self, args);
+        pending = false;
+      }, ms);
+    }
+  };
+}
+
+function throttleHard(fn, ms = 150, context) {
+  let lastStart = 0;
+  let lastEnd = 0;
+  let timer = null;
+
+  return function() {
+    const nowTime = +new Date();
+    const self = this;
+    const args = arguments;
+
+    if (
+      !lastStart ||
+      (lastEnd >= lastStart && nowTime - lastEnd > ms) ||
+      (lastEnd < lastStart && nowTime - lastStart > ms * 8)
+    ) {
+      lastStart = +new Date();
+      fn.apply(context || self, args);
+      lastEnd = +new Date();
+    }
+  };
+}
+
+// setInterval(throttleHard(fnT, 1000), 50);
