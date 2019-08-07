@@ -434,3 +434,38 @@ var hasPathSum = function(root, sum) {
   }
   return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
 };
+
+// 阶梯问题
+//
+function step(n) {
+  if (n < 0) {
+    return 0;
+  }
+  if (n < 3) {
+    return n;
+  }
+  const ary = [];
+
+  ary[0] = 1;
+  ary[1] = 2;
+  for (let i = 2; i < n; i++) {
+    ary[i] = ary[i - 1] + ary[i - 2];
+  }
+  return ary[n - 1];
+}
+
+console.log(step(5), step(10));
+
+function iterFib(n) {
+  var last = 1;
+  var nextLast = 1;
+  var result = 1;
+  for (var i = 2; i <= n; i++) {
+    result = last + nextLast;
+    nextLast = last;
+    last = result;
+  }
+  return result;
+}
+
+console.log(iterFib(5), iterFib(10));
