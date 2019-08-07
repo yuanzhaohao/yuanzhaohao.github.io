@@ -347,7 +347,7 @@ var alice = new bar('Alice');
 console.log(obj.name);
 console.log(alice.name);
 
-function throttle(context, fn, ms) {
+function throttleSimple(fn, ms, context) {
   let lastTime = null;
 
   return function() {
@@ -363,6 +363,30 @@ let fnT = () => {
   console.log('boom');
 };
 
+document.addEventListener('mousemove', throttleSimple(fnT, 200));
+
+function isOddNumber(n) {
+  return n % 2 === 1;
+}
+
+function oddEvenSort(originArr) {
+  let ary = originArr.slice();
+  let start = 0;
+  let end = ary.length;
+
+  while (start < end) {
+    if (isOddNumber(ary[start])) {
+      start++;
+    } else if (!isOddNumber(ary[end])) {
+      end--;
+    } else {
+      [ary[start], ary[end]] = [ary[end], ary[start]];
+    }
+  }
+  return ary;
+}
+
+console.log(oddEvenSort([1, 2, 1, 2, 1, 1, 2]));
 function debounceSimple(fn, ms, context) {
   let timer = null;
 
