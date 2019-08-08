@@ -478,7 +478,7 @@ function step(n) {
   return ary[n - 1];
 }
 
-console.log(step(5), step(10));
+console.log('step', step(5), step(10));
 
 function iterFib(n) {
   var last = 1;
@@ -492,4 +492,72 @@ function iterFib(n) {
   return result;
 }
 
-console.log(iterFib(5), iterFib(10));
+console.log('iterFib', iterFib(5), iterFib(10));
+
+// 一个字典['I', 'have', 'a', 'book', 'good']
+// 实现一个函数，判断一个字符串中是否都是出自字典中的，输出true/false
+// 输入'I have a book' 输出 true
+// 输入 'this is a good book' 输出 false
+function isInDictionary(str, disctionary) {
+  const map = {};
+  disctionary.forEach(d => {
+    map[d] = true;
+  });
+  return str.split(' ').every(val => map[val] === true);
+}
+console.log('isInDictionary', isInDictionary('I have a book', ['I', 'have', 'a', 'book', 'good']));
+console.log(
+  'isInDictionary',
+  isInDictionary('this is a good book', ['I', 'have', 'a', 'book', 'good']),
+);
+
+class BinarySearchTree {
+  constructor() {
+    this.root = null;
+  }
+
+  Node(key) {
+    let left = null;
+    let right = null;
+    return {
+      key,
+      left,
+      right,
+    };
+  }
+
+  insert(key) {
+    let newNode = this.Node(key);
+
+    if (this.root === null) {
+      this.root = newNode;
+    } else {
+      this.insertNode(this.root, newNode);
+    }
+  }
+
+  insertNode(node, newNode) {
+    if (newNode.key < node.key) {
+      if (node.left === null) {
+        node.left = newNode;
+      } else {
+        this.insertNode(node.left, newNode);
+      }
+    } else {
+      if (node.right === null) {
+        node.right = newNode;
+      } else {
+        this.insertNode(node.right, newNode);
+      }
+    }
+  }
+}
+
+let m = new BinarySearchTree();
+m.insert(5);
+m.insert(4);
+m.insert(3);
+m.insert(6);
+m.insert(7);
+
+console.log(m);
