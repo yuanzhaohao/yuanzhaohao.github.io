@@ -511,6 +511,8 @@ console.log(
   isInDictionary('this is a good book', ['I', 'have', 'a', 'book', 'good']),
 );
 
+// 二叉树
+//
 class BinarySearchTree {
   constructor() {
     this.root = null;
@@ -551,6 +553,155 @@ class BinarySearchTree {
       }
     }
   }
+
+  inOrderTraverse(callback) {
+    this.inOrderTraverseNode(this.root, callback);
+  }
+
+  inOrderTraverseNode(node, callback) {
+    if (node !== null) {
+      this.inOrderTraverseNode(node.left, callback);
+      callback(node.key);
+      this.inOrderTraverseNode(node.right, callback);
+    }
+  }
+
+  preOrderTraverse(callback) {
+    this.preOrderTraverseNode(this.root, callback);
+  }
+
+  preOrderTraverseNode(node, callback) {
+    if (node !== null) {
+      callback(node.key);
+      this.preOrderTraverseNode(node.left, callback);
+      this.preOrderTraverseNode(node.right, callback);
+    }
+  }
+
+  postOrderTraverse(callback) {
+    this.postOrderTraverseNode(this.root, callback);
+  }
+
+  postOrderTraverseNode(node, callback) {
+    if (node !== null) {
+      this.postOrderTraverseNode(node.left, callback);
+      this.postOrderTraverseNode(node.right, callback);
+      callback(node.key);
+    }
+  }
+
+  min() {
+    let node = this.root;
+    if (node) {
+      while (node && node.left !== null) {
+        node = node.left;
+      }
+      return node.key;
+    }
+    return null;
+  }
+
+  max() {
+    let node = this.root;
+    if (node) {
+      while (node && node.right !== null) {
+        node = node.right;
+      }
+      return node.key;
+    }
+    return null;
+  }
+
+  find(key) {
+    return this.findNode(this.root, key);
+  }
+
+  findNode(node, key) {
+    if (node === null) {
+      return false;
+    }
+    if (key < node.key) {
+      return this.findNode(node.left, key);
+    } else if (key > node.key) {
+      return this.findNode(node.right, key);
+    } else {
+      return true;
+    }
+  }
+
+  invertTree(node = this.root) {
+    if (node === null) {
+      return;
+    }
+    this.invertTree(node.left);
+    this.invertTree(node.right);
+    [node.left, node.right] = [node.right, node.left];
+  }
+
+  maxDepth(node = this.root) {
+    if (node === null) {
+      return 0;
+    }
+    let leftDepth = this.maxDepth(node.left);
+    let rightDepth = this.maxDepth(node.right);
+    return Math.max(leftDepth, rightDepth) + 1;
+  }
+
+  paths(node = this.root) {
+    if (node === null) {
+      return [];
+    }
+
+    if (node.left === null && node.right === null) {
+      return [node.key];
+    }
+
+    const leftPaths = this.paths(node.left);
+    const rightPaths = this.paths(node.right);
+
+    return leftPaths.concat(rightPaths).map(x => node.key + '->' + x);
+  }
+
+  hasSum(sum) {
+    return this.hasPathSum(this.root, sum);
+  }
+
+  hasPathSum(node, sum) {
+    if (node === null) {
+      return false;
+    }
+    if (node.left === null && node.right === null) {
+      return sum === node.key;
+    }
+    return (
+      this.hasPathSum(node.left, sum - node.key) || this.hasPathSum(node.right, sum - node.key)
+    );
+  }
+
+  findSum(sum) {
+    const result = [];
+
+    this.findSumNode(this.root, sum, [], 0, result);
+
+    return result;
+  }
+
+  findSumNode(node, sum, path, currentVal, result) {
+    currentVal += node.key;
+
+    path.push(node.key);
+    if (currentVal === sum && node.left === null && node.right === null) {
+      result.push(path.slice());
+    }
+    if (node.left !== null) {
+      this.findSumNode(node.left, sum, path, currentVal, result);
+    }
+    if (node.right !== null) {
+      this.findSumNode(node.right, sum, path, currentVal, result);
+    }
+
+    path.pop();
+  }
 }
 
 let m = new BinarySearchTree();
@@ -561,3 +712,58 @@ m.insert(6);
 m.insert(7);
 
 console.log(m);
+const inOrderList = [];
+m.inOrderTraverse(function(key) {
+  inOrderList.push(key);
+});
+console.log('inOrder', inOrderList);
+
+const preOrderList = [];
+m.preOrderTraverse(function(key) {
+  preOrderList.push(key);
+});
+console.log('preOrder', preOrderList);
+
+const postOrderList = [];
+m.postOrderTraverse(function(key) {
+  postOrderList.push(key);
+});
+console.log('postOrder', postOrderList);
+
+console.log('min', m.min());
+console.log('max', m.max());
+
+console.log('find 6', m.find(6));
+console.log('find 8', m.find(8));
+
+console.log('maxDepth', m.maxDepth());
+
+console.log('paths', m.paths());
+console.log('hasPathSum', m.hasSum(9));
+console.log('findSum', m.findSum(12));
+
+m.invertTree();
+console.log(m);
+
+// 最大公共子串
+//
+function findSubStr(str1, str2) {
+  if (str1.length > str2.length) {
+    var temp = str1;
+    str1 = str2;
+    str2 = temp;
+  }
+  var len1 = str1.length,
+    len2 = str2.length;
+  for (var j = len1; j > 0; j--) {
+    for (var i = 0; i < len1 - j; i++) {
+      var current = str1.substr(i, j);
+      if (str2.indexOf(current) >= 0) {
+        return current;
+      }
+    }
+  }
+  return '';
+}
+console.log(findSubStr('aaa3333', 'baa333cc')); // aa333
+console.log(findSubStr('aaaX3333--', 'baa333ccX3333333x'));
