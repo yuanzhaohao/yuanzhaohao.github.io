@@ -245,6 +245,8 @@ return {
 - preloadedState: 可以是初始化的 state，也可以是 enhancer。若传入的参数是`function`，则会替代 enhancer，否则是初始化的 state。
 - enhancer: 是一个高阶函数，用于拓展 store 的功能，如 redux 自带的模块`applyMiddleware`就是一个 enhancer 函数。
 
+##### enhancer
+
 这里需要解释一下`enhancer`的作用。一个 store enhancer，实际上就是一个高阶函数，它的参数是创建 store 的函数（store creator），返回值是一个可以创建功能更加强大的 store 的函数(enhanced store creator)，这和 React 中的高阶组件的概念很相似。store enhancer 函数的结构一般如下：
 
 ```js
@@ -271,4 +273,226 @@ if (typeof enhancer !== 'undefined') {
 
   return enhancer(createStore)(reducer, preloadedState);
 }
+```
+
+下面说下 subscribe 方法，请看源码：
+
+```js
+function subscribe(listener) {
+  if (typeof listener !== 'function') {
+    throw new Error('Expected the listener to be a function.');
+  }
+
+  if (isDispatching) {
+    throw new Error(
+      'You may not call store.subscribe() while the reducer is executing. ' +
+        'If you would like to be notified after the store has been updated, subscribe from a ' +
+        'component and invoke store.getState() in the callback to access the latest state. ' +
+        'See https://redux.js.org/api-reference/store#subscribelistener for more details.',
+    );
+  }
+
+  let isSubscribed = true;
+
+  ensureCanMutateNextListeners();
+  nextListeners.push(listener);
+
+  return function unsubscribe() {
+    if (!isSubscribed) {
+      return;
+    }
+
+    if (isDispatching) {
+      throw new Error(
+        'You may not unsubscribe from a store listener while the reducer is executing. ' +
+          'See https://redux.js.org/api-reference/store#subscribelistener for more details.',
+      );
+    }
+
+    isSubscribed = false;
+
+    ensureCanMutateNextListeners();
+    const index = nextListeners.indexOf(listener);
+    nextListeners.splice(index, 1);
+    currentListeners = null;
+  };
+}
+```
+
+##### subscribe
+
+subscribe 函数实现了一个订阅机制，在 subscribe 函数传入 listener 回调函数，然后在 dispatch 的时候执行这些 listeners。值得一提的是，subscribe 函数的返回值是一个 unsubscribe 函数，用于接触该 listener 的订阅。
+
+dispatch 方法，通过 action 该改变 state，然后执行 subscribe 注册的方法。
+
+```js
+function dispatch(action) {
+  if (!isPlainObject(action)) {
+    throw new Error('Actions must be plain objects. ' + 'Use custom middleware for async actions.');
+  }
+
+  if (typeof action.type === 'undefined') {
+    throw new Error(
+      'Actions may not have an undefined "type" property. ' + 'Have you misspelled a constant?',
+    );
+  }
+
+  if (isDispatching) {
+    throw new Error('Reducers may not dispatch actions.');
+  }
+
+  try {
+    isDispatching = true;
+    currentState = currentReducer(currentState, action);
+  } finally {
+    isDispatching = false;
+  }
+
+  const listeners = (currentListeners = nextListeners);
+  for (let i = 0; i < listeners.length; i++) {
+    const listener = listeners[i];
+    listener();
+  }
+
+  return action;
+}
+```
+
+replaceReducer 方法用于动态更新当前 currentReducer 。 通过对外暴露 replaceReducer API, 外部可以直接调用这个方法来替换当前 currentReducer
+
+```js
+function replaceReducer(nextReducer) {
+  if (typeof nextReducer !== 'function') {
+    throw new Error('Expected the nextReducer to be a function.');
+  }
+
+  currentReducer = nextReducer;
+  dispatch({ type: ActionTypes.REPLACE });
+}
+```
+
+#### combineReducers
+
+顾名思义，combineReducers 作用是将多个 reducer 合并成一个 reducer 并传入 createStore 函数。
+
+```js
+function combineReducers(reducers) {
+  const reducerKeys = Object.keys(reducers);
+  const finalReducers = {};
+  // 首先会过滤不合法的reducer
+  for (let i = 0; i < reducerKeys.length; i++) {
+    const key = reducerKeys[i];
+
+    if (process.env.NODE_ENV !== 'production') {
+      if (typeof reducers[key] === 'undefined') {
+        warning(`No reducer provided for key "${key}"`);
+      }
+    }
+
+    if (typeof reducers[key] === 'function') {
+      finalReducers[key] = reducers[key];
+    }
+  }
+  const finalReducerKeys = Object.keys(finalReducers);
+
+  let unexpectedKeyCache;
+  if (process.env.NODE_ENV !== 'production') {
+    unexpectedKeyCache = {};
+  }
+
+  let shapeAssertionError;
+  try {
+    assertReducerShape(finalReducers);
+  } catch (e) {
+    shapeAssertionError = e;
+  }
+
+  // 返回一个combination方法 这个方法传入state 和action  返回一个新的状态树
+  return function combination(state = {}, action) {
+    if (shapeAssertionError) {
+      throw shapeAssertionError;
+    }
+
+    if (process.env.NODE_ENV !== 'production') {
+      const warningMessage = getUnexpectedStateShapeWarningMessage(
+        state,
+        finalReducers,
+        action,
+        unexpectedKeyCache,
+      );
+      if (warningMessage) {
+        warning(warningMessage);
+      }
+    }
+
+    let hasChanged = false;
+    const nextState = {};
+    for (let i = 0; i < finalReducerKeys.length; i++) {
+      const key = finalReducerKeys[i];
+      const reducer = finalReducers[key];
+      const previousStateForKey = state[key];
+      const nextStateForKey = reducer(previousStateForKey, action);
+      if (typeof nextStateForKey === 'undefined') {
+        const errorMessage = getUndefinedStateErrorMessage(key, action);
+        throw new Error(errorMessage);
+      }
+      nextState[key] = nextStateForKey;
+      hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
+    }
+    hasChanged = hasChanged || finalReducerKeys.length !== Object.keys(state).length;
+    return hasChanged ? nextState : state;
+  };
+}
+```
+
+#### compose & applyMiddleware
+
+上面也提及，applyMiddleware 实际上是一个 enhancer，用于增强 store 的 dispatch 功能。这个函数实际上是实现了函数式编程中的柯里化
+
+```js
+export default function applyMiddleware(...middlewares) {
+  return createStore => (...args) => {
+    const store = createStore(...args);
+    let dispatch = () => {
+      throw new Error(
+        'Dispatching while constructing your middleware is not allowed. ' +
+          'Other middleware would not be applied to this dispatch.',
+      );
+    };
+
+    const middlewareAPI = {
+      getState: store.getState,
+      dispatch: (...args) => dispatch(...args),
+    };
+    const chain = middlewares.map(middleware => middleware(middlewareAPI));
+    dispatch = compose(...chain)(store.dispatch);
+
+    return {
+      ...store,
+      dispatch,
+    };
+  };
+}
+```
+
+下面是 compose 的源码
+
+```js
+export default function compose(...funcs) {
+  if (funcs.length === 0) {
+    return arg => arg;
+  }
+
+  if (funcs.length === 1) {
+    return funcs[0];
+  }
+
+  return funcs.reduce((a, b) => (...args) => a(b(...args)));
+}
+```
+
+核心的代码在于`funcs.reduce((a, b) => (...args) => a(b(...args)))`，compose 函数的作用在于将 chain 中的所有匿名函数，[f1, f2, ... , fx, ..., fn]，组装成一个新的函数，即新的 dispatch，当新 dispatch 执行时，[f1, f2, ... , fx, ..., fn]，从右到左依次执行（ 所以顺序很重要）。举个例子，加入 n=3，当 compose 执行完后，我们得到的 dispatch 是这样的：
+
+```js
+dispatch = f1(f2(f3(store.dispatch))))
 ```

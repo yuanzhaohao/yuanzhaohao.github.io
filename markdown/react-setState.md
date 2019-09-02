@@ -54,3 +54,5 @@ Component.prototype.setState = function(partialState, callback) {
 ```
 
 从上面可以看出，setState 的核心是`updater.enqueueSetState`方法。这里的`updater`是`renderer`在渲染时注入的对象，而这个对象是`reconciler`提供的。
+
+未完待续。。。
