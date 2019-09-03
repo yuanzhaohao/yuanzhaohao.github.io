@@ -245,7 +245,7 @@ return {
 - preloadedState: 可以是初始化的 state，也可以是 enhancer。若传入的参数是`function`，则会替代 enhancer，否则是初始化的 state。
 - enhancer: 是一个高阶函数，用于拓展 store 的功能，如 redux 自带的模块`applyMiddleware`就是一个 enhancer 函数。
 
-这里需要解释一下`enhancer`的作用。
+这里需要解释一下`enhancer`的作用。enhancer 是一个类似于`createStore => (reducer, initialState, enhancer) => { ... })`的函数
 
 ```js
 if (typeof preloadedState === 'function' && typeof enhancer === 'undefined') {
