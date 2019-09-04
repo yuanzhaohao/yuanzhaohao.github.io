@@ -55,4 +55,9 @@ Component.prototype.setState = function(partialState, callback) {
 
 从上面可以看出，setState 的核心是`updater.enqueueSetState`方法。这里的`updater`是`renderer`在渲染时注入的对象，而这个对象是`reconciler`提供的。
 
-未完待续。。。
+这里需要解释一下`renderer`和`reconciler`。
+
+- renderer: 渲染器. Dan 曾经说过，“A renderer teaches React to talk to a specific host environment and manage its host instances.”渲染器用于管理 React 和宿主环境直接的通信以及管理宿主实例。常见的 renderer 包括 react-dom、react-native 等。
+- reconciler: React 里的协调算法，`setState`的主要就是靠这套算法来实现的。React 15 以及更早版本所用的是`Stack reconciler`，React 16 则引进了`Fiber reconciler`。这是 React 16 最核心的一次更新。
+
+这里强烈推荐这两篇文章《(Inside Fiber: in-depth overview of the new reconciliation algorithm in React)[https://medium.com/react-in-depth/inside-fiber-in-depth-overview-of-the-new-reconciliation-algorithm-in-react-e1c04700ef6e]》《(React as a UI Runtime)[https://overreacted.io/react-as-a-ui-runtime/]》
