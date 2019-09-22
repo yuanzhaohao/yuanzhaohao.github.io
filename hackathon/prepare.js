@@ -767,3 +767,40 @@ function findSubStr(str1, str2) {
 }
 console.log(findSubStr('aaa3333', 'baa333cc')); // aa333
 console.log(findSubStr('aaaX3333--', 'baa333ccX3333333x'));
+
+const sendRequest = (urls, max, callback) => {
+  let curStarting = 0; //当前并发量
+  let finishedArr = []; //完成数组
+  const total = urls.length;
+  const handler = () => {
+    if (urls.length) {
+      const url = urls.shift();
+      curStarting++;
+      console.log(url, 'start', '当前并发量：', curStarting);
+      new Promise(resolve => {
+        resolve(url);
+      }).then(res => {
+        curStarting--;
+        finishedArr.push(res);
+        if (curStarting < max) {
+          console.log(res, 'end', '当前并发量：', curStarting);
+          handler();
+        }
+      });
+    }
+    if (finishedArr.length >= total) {
+      callback();
+    }
+  };
+  for (let i = 0; i < max; i++) {
+    handler();
+  }
+  return new Promise(resolve => {
+    resolve(finishedArr);
+  });
+};
+sendRequest([1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 100, 123], 3, function() {
+  console.log('handle');
+}).then(res => {
+  console.log(res);
+});
