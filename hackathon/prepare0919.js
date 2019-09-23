@@ -283,3 +283,145 @@ console.log(alice.name);
 /**
  * 实现一个sendRequest，有最大请求并发限制
  */
+const fetchData = url => {
+  return window.fetch(url).then(function(response) {
+    return response.json();
+  });
+};
+const sendRequest = async (urls, max, callback) => {
+  let current = 0;
+  const total = urls.length;
+  const totalResp = {};
+  const handler = () => {
+    if (urls.length) {
+      const url = urls.shift();
+      current++;
+      fetch(url).then(function(resp) {
+        current--;
+        if (current < max) {
+          handler();
+        }
+        totalResp[url] = resp;
+        if (Object.keys(totalResp).length >= total) {
+          callback();
+        }
+      });
+    }
+  };
+
+  for (let i = 0; i < max; i++) {
+    handler();
+  }
+
+  return new Promise(resolve => {
+    resolve(totalResp);
+  });
+};
+
+(async function() {
+  const resp = await sendRequest(
+    [
+      './birthday.html',
+      './coding.js',
+      './index.html',
+      './love.html',
+      './prepare.html',
+      './prepare.js',
+      './prepare.css',
+    ],
+    3,
+    () => {
+      console.log('call callback');
+    },
+  );
+  console.log(resp);
+})();
+
+/**
+ * sleep函数
+ */
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+// function sleep(ms) {
+//   return new Promise(resolve => setTimeout(resolve, ms));
+// }
+
+async function testSleep() {
+  console.log('Hello');
+  await sleep(3000);
+  console.log('world');
+}
+testSleep();
+
+/**
+ * 最大不重复子串
+ */
+function longestSubStr(str) {
+  if (str.length === 0) {
+    return '';
+  }
+  let subStr = str.charAt(0);
+  let len = subStr.length;
+  let result = subStr;
+  for (let i = 1; i < str.length; i++) {
+    const index = subStr.indexOf(str[i]);
+    if (index !== -1) {
+      subStr = subStr.substr(index + 1) + str[i];
+    } else {
+      subStr += str[i];
+    }
+    if (subStr.length > len) {
+      len = subStr.length;
+      result = subStr;
+    }
+  }
+  return result;
+}
+
+console.log(longestSubStr('abcdbsbc'));
+console.log(longestSubStr('abcabcbb'));
+
+/**
+ * 括号比对
+ */
+function parentheseValid(s) {
+  if (s === '') {
+    return true;
+  }
+  const stack = [];
+  const left = ['(', '[', '{'];
+  const right = [')', ']', '}'];
+  for (let i = 0; i < s.length; i++) {
+    const item = s[i];
+    if (left.indexOf(item) !== -1) {
+      stack.push(item);
+      continue;
+    }
+    if (right.indexOf(item) !== -1) {
+      const p = stack.pop();
+      switch (item) {
+        case ')':
+          if (p !== '(') {
+            return false;
+          }
+          break;
+        case '}':
+          if (p !== '{') {
+            return false;
+          }
+          break;
+        case ']':
+          if (p !== '[') {
+            return false;
+          }
+          break;
+      }
+    }
+  }
+  return stack.length === 0;
+}
+console.log(parentheseValid(''));
+console.log(parentheseValid('[['));
+console.log(parentheseValid('()'));
+console.log(parentheseValid('()[]{}'));
+console.log(parentheseValid('([)]'));
+console.log(parentheseValid('{[]}'));
