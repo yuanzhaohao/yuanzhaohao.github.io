@@ -446,5 +446,5 @@ function findLongestSubStr(str1, str2) {
 
   return '';
 }
-console.log(findLongestSubStr('aaa3333', 'a33cc')); // aa333
+console.log(findLongestSubStr('aaa3333', 'baa333cc')); // aa333
 console.log(findLongestSubStr('aaaX3333--', 'baa333ccX3333333x')); // X3333
