@@ -425,3 +425,26 @@ console.log(parentheseValid('()'));
 console.log(parentheseValid('()[]{}'));
 console.log(parentheseValid('([)]'));
 console.log(parentheseValid('{[]}'));
+
+/**
+ * 最大公共子串
+ */
+function findLongestSubStr(str1, str2) {
+  if (str1.length > str2.length) {
+    [str1, str2] = [str2, str1];
+  }
+  const length = str1.length;
+  let j = str1.length;
+  while (j--) {
+    for (let i = 0; i < length - j; i++) {
+      const current = str1.substr(i, j);
+      if (str2.indexOf(current) !== -1) {
+        return current;
+      }
+    }
+  }
+
+  return '';
+}
+console.log(findLongestSubStr('aaa3333', 'a33cc')); // aa333
+console.log(findLongestSubStr('aaaX3333--', 'baa333ccX3333333x')); // X3333
