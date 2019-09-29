@@ -448,3 +448,11 @@ function findLongestSubStr(str1, str2) {
 }
 console.log(findLongestSubStr('aaa3333', 'baa333cc')); // aa333
 console.log(findLongestSubStr('aaaX3333--', 'baa333ccX3333333x')); // X3333
+
+var hasPathSum = function(root, sum) {
+  if (!root) return false;
+  if (!root.left && !root.right) {
+    return sum === root.val;
+  }
+  return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+};
