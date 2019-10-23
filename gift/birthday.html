@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
-  <title>Happy Birthday</title>
+  <title>Miss Pan, Happy Birthday</title>
   <style>
     * {
       padding: 0;
@@ -181,8 +181,9 @@
       txtCtx.font = `bold ${fontSize}px Sans-serif`;
       txtCtx.textAlign = 'center';
       txtCtx.baseline = 'middle';
-      txtCtx.fillText('H A P P Y', WIDTH / 2, HEIGHT / 2 - fontSize - 20);
-      txtCtx.fillText('B I R T H D A Y', WIDTH / 2, HEIGHT / 2);
+      txtCtx.fillText('M I S S  P A N', WIDTH / 2, HEIGHT / 2 - fontSize - 20);
+      txtCtx.fillText('H A P P Y', WIDTH / 2, HEIGHT / 2);
+      txtCtx.fillText('B I R T H D A Y', WIDTH / 2, HEIGHT / 2 + fontSize + 20);
 
       imgData = txtCtx.getImageData(0, 0, WIDTH, HEIGHT).data;
 
