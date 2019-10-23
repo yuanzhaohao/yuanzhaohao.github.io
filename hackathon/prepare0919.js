@@ -456,3 +456,7 @@ var hasPathSum = function(root, sum) {
   }
   return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
 };
+
+const result = [];
+result[5] = 'test';
+console.log(result, result.length);
